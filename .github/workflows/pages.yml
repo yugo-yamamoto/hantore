@@ -1,0 +1,62 @@
+# 学習アプリだけを GitHub Pages に公開する。
+# 問題作成管理画面（admin.html）と字幕取得サーバー（server.py）は
+# 手元でだけ動かすものなので、成果物に含めない。
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 学習アプリのファイルだけを集める
+        run: |
+          set -eu
+          mkdir -p _site/css _site/js _site/decks
+          cp index.html            _site/
+          cp css/style.css         _site/css/
+          # 管理画面用の admin.js / admin.css は入れない
+          cp js/speech.js js/hangul.js js/data.js js/quiz.js js/deck.js js/app.js _site/js/
+          # デッキは語彙データのみ（字幕本文は decks/lines/ にありリポジトリに無い）
+          cp decks/*.json          _site/decks/ 2>/dev/null || true
+          touch _site/.nojekyll
+
+      - name: 管理画面とサーバーが混入していないか確認
+        run: |
+          set -eu
+          for f in admin.html js/admin.js css/admin.css server.py; do
+            if [ -e "_site/$f" ]; then echo "::error::_site に $f が含まれています"; exit 1; fi
+          done
+          if grep -rl "api/decks" _site/js/app.js >/dev/null; then
+            echo "app.js は API の有無を見て管理画面リンクを出し分けます（想定どおり）"
+          fi
+          echo "--- 公開されるファイル ---"
+          find _site -type f | sort
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

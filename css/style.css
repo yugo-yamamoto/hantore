@@ -132,6 +132,9 @@ button { font-family: var(--font); cursor: pointer; }
   color: var(--blue); text-decoration: none; font-weight: 800;
 }
 .admin-link:hover { text-decoration: underline; }
+/* 管理画面はローカルサーバー専用。GitHub Pages などでは隠す */
+body.no-admin .admin-link,
+body.no-admin .deck-edit { display: none; }
 .deck-empty {
   border: 2px dashed var(--gray-line); border-radius: 14px; padding: 14px 16px;
   color: var(--gray-text); font-size: 13px; font-weight: 700; line-height: 1.7;

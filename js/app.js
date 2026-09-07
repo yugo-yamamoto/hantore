@@ -378,9 +378,11 @@
     if (!box || !window.DECKS) return;
     var items = DECKS.list();
     if (!items.length) {
-      box.innerHTML = '<div class="deck-empty">まだ動画デッキがありません。' +
-        '<a href="admin.html">📺 問題作成管理画面</a> で YouTube の URL を指定すると、' +
-        '字幕に出てきた単語だけのレッスンが作れます。</div>';
+      box.innerHTML = '<div class="deck-empty">' + (document.body.classList.contains('no-admin')
+        ? 'ここには動画から作ったデッキが並びます。作るには手元で <code>uv run server.py</code> を起動して' +
+          ' 問題作成管理画面（admin.html）を開いてください。'
+        : 'まだ動画デッキがありません。<a href="admin.html">📺 問題作成管理画面</a> で YouTube の URL を' +
+          '指定すると、字幕に出てきた単語だけのレッスンが作れます。') + '</div>';
       return;
     }
     box.innerHTML = items.map(function (it) {
@@ -539,6 +541,17 @@
       $('log-toggle').textContent = '▲';
     }
     log('起動しました（名詞 ' + NOUNS.length + '語 / 動詞・形容詞 ' + PREDS.length + '語）');
+
+    // 管理画面はローカルサーバー（uv run server.py）専用。
+    // API が無い環境（GitHub Pages など）ではリンクを出さない
+    fetch('api/decks', { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function () {
+        document.body.classList.remove('no-admin');
+        log('ローカルサーバーで動作中（問題作成管理画面が使えます）');
+      }, function () {
+        log('静的配信で動作中（問題を解く機能のみ。管理画面はローカル専用）');
+      });
 
     // 動画デッキ（decks/index.json）を読み込む。無くても学習アプリは動く
     if (window.DECKS) {
