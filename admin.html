@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>問題作成管理画面 — 한토레</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin">
+
+<header class="ad-head">
+  <span class="ad-logo">📺</span>
+  <div class="ad-title"><strong>問題作成管理画面</strong><span>YouTube の字幕から単語レッスンを作る</span></div>
+  <a class="btn ghost small" href="index.html">← 学習アプリへ</a>
+</header>
+
+<main class="ad-main">
+
+  <!-- ---------- URL 入力 ---------- -->
+  <section class="ad-card">
+    <div class="ad-row">
+      <input id="url" class="ad-input" placeholder="https://www.youtube.com/watch?v=… または https://youtu.be/…">
+      <button class="btn" id="btn-fetch">字幕を取得</button>
+    </div>
+    <label class="ad-check"><input type="checkbox" id="refresh"> キャッシュを使わず取り直す</label>
+    <div class="ad-note" id="fetch-note">
+      韓国語字幕（手動字幕があれば優先）と、YouTube の日本語自動翻訳字幕を取得します。
+      出題するのは辞書（名詞 <b id="n-nouns">-</b> 語 / 動詞・形容詞 <b id="n-preds">-</b> 語 /
+      副詞・代名詞など <b id="n-others">-</b> 語）に載っている単語だけです。
+    </div>
+  </section>
+
+  <!-- ---------- 取得結果 ---------- -->
+  <section class="ad-card" id="info-card" hidden>
+    <div class="ad-video">
+      <div class="ad-vtitle"><strong id="v-title">-</strong><span id="v-meta">-</span></div>
+      <div class="ad-badges" id="v-badges"></div>
+    </div>
+    <div class="ad-stats" id="v-stats"></div>
+  </section>
+
+  <!-- ---------- 単語一覧 ---------- -->
+  <section class="ad-card" id="words-card" hidden>
+    <h2>出題する単語 <span id="w-count" class="ad-count"></span></h2>
+    <div class="ad-row wrap">
+      <button class="chip" data-filter="all">全部</button>
+      <button class="chip on" data-filter="on">出題する</button>
+      <button class="chip" data-filter="check">要確認</button>
+      <button class="chip" data-filter="off">除外</button>
+      <span class="ad-spacer"></span>
+      <button class="btn ghost small" id="btn-all">すべて出題する</button>
+      <button class="btn ghost small" id="btn-safe">要確認を外す</button>
+    </div>
+    <div id="w-list" class="ad-list"></div>
+  </section>
+
+  <!-- ---------- 辞書にない語 ---------- -->
+  <section class="ad-card" id="unknown-card" hidden>
+    <h2>辞書にない語 <span id="u-count" class="ad-count"></span>
+      <span class="ad-sub">出題対象外（訳が保証できないため）。よく出る語は js/data.js に追加すると出題できます</span></h2>
+    <div id="u-list" class="ad-tags"></div>
+  </section>
+
+  <!-- ---------- 問題プレビュー ---------- -->
+  <section class="ad-card" id="preview-card" hidden>
+    <h2>問題プレビュー <span class="ad-sub">学習アプリと同じロジック（js/quiz.js）で生成しています</span></h2>
+    <div class="ad-row wrap">
+      <button class="chip on" data-pv="mix">ミックス</button>
+      <button class="chip" data-pv="noun-k2j">名詞 韓→日</button>
+      <button class="chip" data-pv="noun-j2k">名詞 日→韓</button>
+      <button class="chip" data-pv="pred-k2j">用言 韓→日</button>
+      <button class="chip" data-pv="conj-j2k">活用 日→韓</button>
+      <button class="chip" data-pv="conj-k2j">活用 韓→日</button>
+      <button class="chip" data-pv="other-k2j">副詞など 韓→日</button>
+      <button class="chip" data-pv="listen">聞き取り</button>
+      <span class="ad-spacer"></span>
+      <button class="btn ghost small" id="btn-preview">作り直す</button>
+    </div>
+    <div id="pv-list" class="ad-list"></div>
+  </section>
+
+  <!-- ---------- 保存 ---------- -->
+  <section class="ad-card" id="save-card" hidden>
+    <div class="ad-row">
+      <button class="btn" id="btn-save">このデッキを保存</button>
+      <span class="ad-note" id="save-note">decks/&lt;動画ID&gt;.json に保存します</span>
+    </div>
+  </section>
+
+  <!-- ---------- 既存デッキ ---------- -->
+  <section class="ad-card">
+    <h2>保存済みデッキ <span id="d-count" class="ad-count"></span></h2>
+    <div id="d-list" class="ad-list"></div>
+  </section>
+
+</main>
+
+<!-- ---------- 開発ログ ---------- -->
+<div id="logpanel">
+  <div class="lp-head">
+    <b>📋 EVENT LOG</b>
+    <button id="log-copy">COPY</button>
+    <button id="log-clear">CLEAR</button>
+    <button id="log-toggle">_</button>
+  </div>
+  <div id="log"></div>
+</div>
+
+<script src="js/speech.js"></script>
+<script src="js/hangul.js"></script>
+<script src="js/data.js"></script>
+<script src="js/extract.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

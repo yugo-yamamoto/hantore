@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>한토레 — 韓国語ワード練習</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============================ ホーム ============================ -->
+<section id="home" class="screen active">
+  <div class="home-inner">
+    <div class="logo">
+      <div class="mark">🇰🇷</div>
+      <h1>한토레</h1>
+      <p>韓国語 単語＆活用トレーニング</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box"><b id="st-xp">0</b><span>XP</span></div>
+      <div class="stat-box"><b id="st-lesson">0</b><span>レッスン</span></div>
+      <div class="stat-box"><b id="st-acc">-</b><span>正答率</span></div>
+    </div>
+
+    <div class="section-title">コースを選ぶ</div>
+
+    <button class="mode-card m-noun" data-mode="noun-k2j">
+      <div class="icon">📦</div>
+      <div class="body"><strong>名詞 <span class="dir k2j">韓 → 日</span></strong>
+        <span>사람 → 「人」　意味を選ぶ</span></div>
+      <div class="arrow">›</div>
+    </button>
+
+    <button class="mode-card m-noun" data-mode="noun-j2k">
+      <div class="icon">📦</div>
+      <div class="body"><strong>名詞 <span class="dir j2k">日 → 韓</span></strong>
+        <span>「人」→ 사람　韓国語を選ぶ</span></div>
+      <div class="arrow">›</div>
+    </button>
+
+    <button class="mode-card m-pred" data-mode="pred-k2j">
+      <div class="icon">🏃</div>
+      <div class="body"><strong>動詞・形容詞 <span class="dir k2j">韓 → 日</span></strong>
+        <span>먹다 → 「食べる」　辞書形の意味</span></div>
+      <div class="arrow">›</div>
+    </button>
+
+    <button class="mode-card m-pred" data-mode="pred-j2k">
+      <div class="icon">🏃</div>
+      <div class="body"><strong>動詞・形容詞 <span class="dir j2k">日 → 韓</span></strong>
+        <span>「食べる」→ 먹다　辞書形を選ぶ</span></div>
+      <div class="arrow">›</div>
+    </button>
+
+    <button class="mode-card m-conj" data-mode="conj-k2j">
+      <div class="icon">🔎</div>
+      <div class="body"><strong>活用 <span class="dir k2j">韓 → 日</span></strong>
+        <span>먹었어요 → 「食べる／過去形」　意味と活用形を当てる</span></div>
+      <div class="arrow">›</div>
+    </button>
+
+    <button class="mode-card m-conj" data-mode="conj-j2k">
+      <div class="icon">🔀</div>
+      <div class="body"><strong>活用 <span class="dir j2k">日 → 韓</span></strong>
+        <span>먹다＋過去形 → 먹었어요　活用させて作る</span></div>
+      <div class="arrow">›</div>
+    </button>
+
+    <button class="mode-card m-other" data-mode="other-k2j">
+      <div class="icon">💬</div>
+      <div class="body"><strong>副詞・代名詞など <span class="dir k2j">韓 → 日</span></strong>
+        <span>너무 → 「あまりにも」　副詞・代名詞・あいさつ</span></div>
+      <div class="arrow">›</div>
+    </button>
+
+    <button class="mode-card m-other" data-mode="other-j2k">
+      <div class="icon">💬</div>
+      <div class="body"><strong>副詞・代名詞など <span class="dir j2k">日 → 韓</span></strong>
+        <span>「もう（今から）」→ 이제　韓国語を選ぶ</span></div>
+      <div class="arrow">›</div>
+    </button>
+
+    <button class="mode-card m-mix" data-mode="mix">
+      <div class="icon">🎯</div>
+      <div class="body"><strong>ミックス</strong>
+        <span>上の8コースをまとめて出題</span></div>
+      <div class="arrow">›</div>
+    </button>
+
+    <div class="section-title">動画から <a class="admin-link" href="admin.html">📺 問題作成管理画面</a></div>
+    <div id="deck-list"></div>
+
+    <div class="section-title">設定</div>
+    <div class="opt-row">
+      <label>問題数</label>
+      <button class="chip" data-opt="count" data-val="10">10問</button>
+      <button class="chip on" data-opt="count" data-val="15">15問</button>
+      <button class="chip" data-opt="count" data-val="20">20問</button>
+    </div>
+    <div class="opt-row">
+      <label>活用範囲</label>
+      <button class="chip on" data-opt="scope" data-val="basic">基本（해요体・過去・합니다体・否定）</button>
+      <button class="chip" data-opt="scope" data-val="all">全部（連体形・仮定・希望など）</button>
+    </div>
+
+    <div class="section-title">音声</div>
+    <div class="opt-row">
+      <label>読み上げ</label>
+      <button class="chip on" data-opt="speak" data-val="on">ON</button>
+      <button class="chip" data-opt="speak" data-val="off">OFF</button>
+    </div>
+    <div class="opt-row">
+      <label>速度</label>
+      <button class="chip" data-opt="rate" data-val="0.7">ゆっくり</button>
+      <button class="chip on" data-opt="rate" data-val="0.95">ふつう</button>
+      <button class="chip" data-opt="rate" data-val="1.15">速め</button>
+    </div>
+    <div class="opt-row">
+      <label>問題の自動読み上げ</label>
+      <button class="chip on" data-opt="autoSpeak" data-val="on">する</button>
+      <button class="chip" data-opt="autoSpeak" data-val="off">しない</button>
+    </div>
+    <div class="opt-row" style="color:#afafaf;font-size:12px;font-weight:700">
+      ハングルの横の 🔊 を押すと発音を聞けます（Windows の Edge / Chrome 推奨）
+    </div>
+
+    <div class="section-title">辞書</div>
+    <button class="btn ghost wide" id="btn-table">📖 活用表を見る</button>
+  </div>
+</section>
+
+<!-- ============================ レッスン ============================ -->
+<section id="lesson" class="screen">
+  <div class="top-bar">
+    <button class="close-btn" id="btn-quit" title="やめる">✕</button>
+    <div class="progress"><div class="fill" id="bar"></div></div>
+    <div class="counter" id="counter"></div>
+  </div>
+
+  <div class="q-area">
+    <div class="q-title" id="q-title">問題</div>
+    <div id="q-body"></div>
+  </div>
+
+  <div class="footer" id="footer">
+    <div class="footer-inner">
+      <div class="verdict" id="verdict">
+        <div class="head" id="verdict-head"></div>
+        <div class="detail" id="verdict-detail"></div>
+      </div>
+      <div class="spacer" id="footer-spacer"></div>
+      <button class="btn" id="btn-main" disabled>チェック</button>
+    </div>
+    <div class="kbd-hint">キー操作： 1〜4 で選択 ／ Enter で決定</div>
+  </div>
+</section>
+
+<!-- ============================ 結果 ============================ -->
+<section id="result" class="screen">
+  <div class="center-screen">
+    <div class="big" id="res-emoji">🎉</div>
+    <h2 id="res-title">レッスン完了！</h2>
+    <p id="res-sub">おつかれさま！</p>
+    <div class="result-cards">
+      <div class="result-card"><div class="cap">獲得XP</div><div class="val" id="res-xp">0</div></div>
+      <div class="result-card blue"><div class="cap">正答率</div><div class="val" id="res-acc">0%</div></div>
+      <div class="result-card green"><div class="cap">連続正解</div><div class="val" id="res-combo">0</div></div>
+    </div>
+    <div class="review-list" id="res-review"></div>
+    <button class="btn wide" id="btn-again" style="max-width:420px">もう一度</button>
+    <div style="height:12px"></div>
+    <button class="btn ghost wide" id="btn-home" style="max-width:420px">ホームへ</button>
+  </div>
+</section>
+
+<!-- ============================ 活用表 ============================ -->
+<section id="tableview" class="screen">
+  <div class="top-bar">
+    <button class="close-btn" id="btn-tv-close">✕</button>
+    <div style="flex:1;font-weight:800">活用表</div>
+  </div>
+  <div class="tv-inner">
+    <input class="tv-search" id="tv-search" placeholder="韓国語 / 日本語で検索（例: 먹다, 寒い）">
+    <div id="tv-list"></div>
+  </div>
+</section>
+
+<!-- ============================ 開発ログ ============================ -->
+<div id="logpanel">
+  <div class="lp-head">
+    <b>📋 EVENT LOG</b>
+    <button id="log-copy">COPY</button>
+    <button id="log-clear">CLEAR</button>
+    <button id="log-toggle">_</button>
+  </div>
+  <div id="log"></div>
+</div>
+
+<script src="js/speech.js"></script>
+<script src="js/hangul.js"></script>
+<script src="js/data.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/deck.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
