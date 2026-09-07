@@ -31,6 +31,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DECKS = os.path.join(ROOT, "decks")
 CACHE = os.path.join(DECKS, ".cache")
+LINES = os.path.join(DECKS, "lines")   # 字幕本文だけを置く場所（公開リポジトリには含めない）
 
 MAX_LINES = 1200          # これを超えたら等間隔サンプリング
 MIN_HANGUL_RATIO = 0.3    # ハングル文字率がこれ未満なら韓国語動画ではないと判断
@@ -288,6 +289,17 @@ def deck_path(vid):
     return os.path.join(DECKS, vid + ".json")
 
 
+def lines_path(vid):
+    """字幕本文の置き場。デッキ本体（語彙データ）とは別ファイルにする。
+
+    デッキ本体は「どの単語が何回出たか」という派生データだけなので共有できるが、
+    字幕の本文は動画制作者の著作物なので decks/lines/ に分けて公開対象から外す。
+    """
+    if not re.fullmatch(r"[A-Za-z0-9_-]{11}", vid or ""):
+        raise UserError("不正な動画IDです")
+    return os.path.join(LINES, vid + ".json")
+
+
 def rebuild_index():
     os.makedirs(DECKS, exist_ok=True)
     items = []
@@ -399,10 +411,19 @@ class Handler(SimpleHTTPRequestHandler):
             deck = self.read_body()
             deck["id"] = m.group(1)
             os.makedirs(DECKS, exist_ok=True)
+            # 字幕本文は別ファイルへ（デッキ本体には残さない）
+            lines = deck.pop("lines", None)
+            has_lines = bool(lines) or os.path.exists(lines_path(deck["id"]))
+            deck["linesFile"] = ("lines/" + deck["id"] + ".json") if has_lines else None
             with open(deck_path(deck["id"]), "w", encoding="utf-8") as f:
                 json.dump(deck, f, ensure_ascii=False, indent=1)
+            if lines:
+                os.makedirs(LINES, exist_ok=True)
+                with open(lines_path(deck["id"]), "w", encoding="utf-8") as f:
+                    json.dump({"id": deck["id"], "lines": lines}, f, ensure_ascii=False)
             index = rebuild_index()
-            sys.stderr.write("  [deck] 保存: %s（%d語）\n" % (deck["id"], len(deck.get("words") or [])))
+            sys.stderr.write("  [deck] 保存: %s（%d語 / 字幕%d行）\n"
+                             % (deck["id"], len(deck.get("words") or []), len(lines or [])))
             return self.send_json({"ok": True, "id": deck["id"], "index": index})
         except (UserError, ValueError, OSError) as e:
             return self.send_json({"error": str(e)}, 400)
@@ -412,9 +433,9 @@ class Handler(SimpleHTTPRequestHandler):
         if not m:
             return self.send_json({"error": "not found"}, 404)
         try:
-            p = deck_path(m.group(1))
-            if os.path.exists(p):
-                os.remove(p)
+            for p in (deck_path(m.group(1)), lines_path(m.group(1))):
+                if os.path.exists(p):
+                    os.remove(p)
             return self.send_json({"ok": True, "index": rebuild_index()})
         except (UserError, OSError) as e:
             return self.send_json({"error": str(e)}, 400)
@@ -427,6 +448,7 @@ def main():
     args = ap.parse_args()
 
     os.makedirs(CACHE, exist_ok=True)
+    os.makedirs(LINES, exist_ok=True)
     rebuild_index()
     srv = ThreadingHTTPServer((args.host, args.port), Handler)
     print("한토레 サーバー起動")

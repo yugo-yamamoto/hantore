@@ -166,8 +166,9 @@
       var forms = Object.keys(w.forms).map(function (k) {
         return (KO.FORM_MAP[k] || {}).label || k;
       }).concat(Object.keys(w.exts)).join('・');
+      var lines = ST.caps.lines || [];
       var ex = (w.ex || []).slice(0, 2).map(function (li) {
-        var l = ST.caps.lines[li];
+        var l = lines[li];
         if (!l) return '';
         return '<div>' + esc(l.ko) + SPEECH.btn(l.ko, 'sm') +
           '<a href="' + ytLink(l.t) + '" target="_blank">▶ ' + fmtDur(l.t / 1000) + '</a>' +
@@ -226,7 +227,7 @@
       (d.type === 'noun' ? nouns : (d.type === 'other' ? others : preds)).push(d);
       meta[d.ko] = {
         forms: w.forms,
-        ex: (w.ex || []).map(function (i) { return ST.caps.lines[i]; }).filter(Boolean)
+        ex: (w.ex || []).map(function (i) { return (ST.caps.lines || [])[i]; }).filter(Boolean)
       };
     });
     return { nouns: nouns, preds: preds, others: others, meta: meta, scope: 'basic' };
@@ -298,7 +299,8 @@
       $('btn-save').disabled = false;
       if (res.error) throw new Error(res.error);
       var on = d.words.filter(function (w) { return w.include; }).length;
-      $('save-note').textContent = '✓ decks/' + d.id + '.json に保存しました（出題 ' + on + '語）';
+      $('save-note').textContent = '✓ decks/' + d.id + '.json に保存しました（出題 ' + on + '語）' +
+        (d.lines && d.lines.length ? '　字幕本文は decks/lines/ に分けて保存（公開対象外）' : '');
       log('保存しました: decks/' + d.id + '.json（出題 ' + on + '語）');
       renderDecks(res.index);
     }).catch(function (e) {
@@ -334,25 +336,65 @@
     });
   }
 
+  /** 保存済みデッキの語彙データから統計を組み立てる（字幕本文が無いとき用） */
+  function statsFromDeck(d, words) {
+    var cap = d.captions || {}, gen = d.generated || {};
+    var by = function (t) { return words.filter(function (w) { return w.type === t; }).length; };
+    return {
+      lines: cap.lines || 0, tokens: gen.tokens || 0,
+      hits: 0, coverage: gen.coverage || 0,
+      nouns: by('noun'), preds: by('verb') + by('adj'), others: by('other'),
+      quizzable: words.filter(function (w) { return w.include; }).length,
+      unknownOnceRatio: 0
+    };
+  }
+
   /** 保存済みデッキを読み込んで編集する（字幕は取り直さない） */
   function openDeck(id) {
+    var deck = null;
     fetch('decks/' + id + '.json', { cache: 'no-store' })
       .then(function (r) { return r.json(); })
       .then(function (d) {
+        deck = d;
+        // 字幕本文は別ファイル。手元に無ければ語彙データだけで開く
+        return fetch('decks/lines/' + id + '.json', { cache: 'no-store' })
+          .then(function (r) { return r.ok ? r.json() : null; }, function () { return null; });
+      })
+      .then(function (lf) {
+        var d = deck;
+        d.lines = (lf && lf.lines) || [];
         ST.caps = { id: d.id, source: d.source, captions: d.captions, generated: d.generated, lines: d.lines };
         if (!IDX) IDX = EXTRACT.buildIndex();
-        var r = EXTRACT.run(d.lines, IDX);         // 抽出をやり直し、保存済みの採否を反映する
         var saved = {};
         (d.words || []).forEach(function (w) { saved[w.ko] = w; });
-        r.words.forEach(function (w) { if (saved[w.ko]) w.include = saved[w.ko].include !== false; });
-        ST.words = r.words; ST.unknown = r.unknown; ST.stats = r.stats;
+        if (d.lines.length) {
+          var r = EXTRACT.run(d.lines, IDX);       // 抽出をやり直し、保存済みの採否を反映する
+          r.words.forEach(function (w) { if (saved[w.ko]) w.include = saved[w.ko].include !== false; });
+          ST.words = r.words; ST.unknown = r.unknown; ST.stats = r.stats;
+        } else {
+          // 字幕本文が無いので抽出はやり直せない。保存済みの語彙データをそのまま使う
+          var byKo = BY_KO;
+          ST.words = (d.words || []).map(function (w) {
+            var dic = byKo[w.ko] || {};
+            return {
+              ko: w.ko, ja: dic.ja || '?', type: dic.type || 'noun', cat: dic.cat, pos: dic.pos || null,
+              weak: !!dic.weak, count: w.count || 0, surfaces: w.surfaces || {}, forms: w.forms || {},
+              exts: {}, ex: w.ex || [], certain: true, ambiguous: false,
+              needsCheck: !!w.needsCheck, include: w.include !== false
+            };
+          });
+          ST.unknown = d.unknown || [];
+          ST.stats = statsFromDeck(d, ST.words);
+          log('字幕本文（decks/lines/' + id + '.json）が無いため、保存済みの語彙データで開きました', 'warn');
+        }
         $('url').value = d.source.url || '';
         renderInfo(); renderWords(); renderUnknown(); renderPreview();
         ['info-card', 'words-card', 'unknown-card', 'preview-card', 'save-card'].forEach(function (x) {
           $(x).hidden = false;
         });
-        $('save-note').textContent = 'decks/' + d.id + '.json を編集しています';
-        log('デッキを読み込みました: ' + d.id + '（' + r.words.length + '語）');
+        $('save-note').textContent = 'decks/' + d.id + '.json を編集しています' +
+          (d.lines.length ? '' : '（字幕本文なし・語彙データのみ）');
+        log('デッキを読み込みました: ' + d.id + '（' + ST.words.length + '語）');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       })
       .catch(function (e) { log('デッキの読み込みに失敗: ' + e.message, 'err'); });

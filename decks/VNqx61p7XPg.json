@@ -1,0 +1,4996 @@
+{
+ "schema": 1,
+ "id": "VNqx61p7XPg",
+ "source": {
+  "url": "https://www.youtube.com/watch?v=VNqx61p7XPg",
+  "title": "속보) 지금부터 회사 탈출하겠습니다.",
+  "channel": "LE SSERAFIM",
+  "durationSec": 1358,
+  "uploadDate": "20260724"
+ },
+ "captions": {
+  "koTrack": "ko",
+  "jaTrack": "ja",
+  "manual": true,
+  "aligned": "time",
+  "lines": 605,
+  "hangulRatio": 0.817
+ },
+ "generated": {
+  "at": "2026-09-07T20:55:56+0900",
+  "ytdlp": "2026.08.19",
+  "coverage": 0.555,
+  "tokens": 2067,
+  "savedAt": "2026-09-07T11:56:22.473Z"
+ },
+ "words": [
+  {
+   "ko": "이거",
+   "count": 82,
+   "surfaces": {
+    "이거": 59,
+    "이게": 12,
+    "이걸": 2,
+    "이것도": 5,
+    "이거는": 2,
+    "이거랑": 1,
+    "이거야": 1
+   },
+   "forms": {},
+   "ex": [
+    0,
+    1,
+    24
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "나",
+   "count": 50,
+   "surfaces": {
+    "나": 23,
+    "내가": 5,
+    "나도": 5,
+    "나가": 2,
+    "내": 5,
+    "나랑": 1,
+    "나와": 1,
+    "나는": 8
+   },
+   "forms": {},
+   "ex": [
+    16,
+    21,
+    41
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "거",
+   "count": 49,
+   "surfaces": {
+    "거": 31,
+    "거에": 2,
+    "거랑": 1,
+    "거야": 12,
+    "거를": 3
+   },
+   "forms": {},
+   "ex": [
+    18,
+    25,
+    28
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "하다",
+   "count": 38,
+   "surfaces": {
+    "해야지": 2,
+    "할": 4,
+    "하자": 4,
+    "하는": 11,
+    "하면": 1,
+    "하고": 5,
+    "하면서": 1,
+    "하세요": 1,
+    "했는데": 2,
+    "해봐": 1,
+    "한": 3,
+    "할게요": 1,
+    "해요": 2
+   },
+   "forms": {
+    "modifier": 11,
+    "cond": 1,
+    "go": 5,
+    "seyo": 1,
+    "polite": 2
+   },
+   "ex": [
+    0,
+    11,
+    13
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "알다",
+   "count": 37,
+   "surfaces": {
+    "안": 26,
+    "아세요": 1,
+    "알겠어": 1,
+    "알아요": 2,
+    "알게": 1,
+    "알지": 2,
+    "알았어": 1,
+    "알았는데": 1,
+    "알아": 2
+   },
+   "forms": {
+    "seyo": 1,
+    "polite": 2
+   },
+   "ex": [
+    33,
+    34,
+    38
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "진짜",
+   "count": 36,
+   "surfaces": {
+    "진짜": 36
+   },
+   "forms": {},
+   "ex": [
+    39,
+    62,
+    100
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "되다",
+   "count": 28,
+   "surfaces": {
+    "돼": 11,
+    "돼요": 2,
+    "되면": 1,
+    "된": 2,
+    "되나": 1,
+    "되는": 4,
+    "되거든": 1,
+    "됐어": 3,
+    "되게": 1,
+    "될": 2
+   },
+   "forms": {
+    "polite": 2,
+    "cond": 1,
+    "modifier": 4
+   },
+   "ex": [
+    16,
+    21,
+    33
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "뭐",
+   "count": 25,
+   "surfaces": {
+    "뭐": 8,
+    "뭐가": 2,
+    "뭐야": 10,
+    "뭐라고": 1,
+    "뭔가": 3,
+    "뭐부터": 1
+   },
+   "forms": {},
+   "ex": [
+    11,
+    14,
+    21
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "있다",
+   "count": 24,
+   "surfaces": {
+    "있는데": 1,
+    "있는": 7,
+    "있을": 2,
+    "있어요": 2,
+    "있어": 6,
+    "있잖아": 2,
+    "있어야": 1,
+    "있네": 1,
+    "있습니다": 2
+   },
+   "forms": {
+    "modifier": 7,
+    "polite": 2,
+    "formal": 2
+   },
+   "ex": [
+    0,
+    18,
+    44
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "가다",
+   "count": 23,
+   "surfaces": {
+    "갈": 1,
+    "가자": 9,
+    "가도": 1,
+    "가": 4,
+    "가요": 1,
+    "가지": 1,
+    "가고": 2,
+    "가는": 1,
+    "가야": 1,
+    "갑니다": 1,
+    "갔는데": 1
+   },
+   "forms": {
+    "polite": 1,
+    "go": 2,
+    "modifier": 1,
+    "formal": 1
+   },
+   "ex": [
+    35,
+    67,
+    68
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "보다",
+   "count": 22,
+   "surfaces": {
+    "보니까": 4,
+    "보니": 1,
+    "보고": 4,
+    "볼게요": 2,
+    "봤습니다": 2,
+    "보면": 1,
+    "보지": 1,
+    "보는": 1,
+    "봐": 2,
+    "봐봐": 2,
+    "봤어": 1,
+    "봐요": 1
+   },
+   "forms": {
+    "go": 4,
+    "formalPast": 2,
+    "cond": 1,
+    "modifier": 1,
+    "polite": 1
+   },
+   "ex": [
+    7,
+    30,
+    42
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "그런데",
+   "count": 21,
+   "surfaces": {
+    "근데": 21
+   },
+   "forms": {},
+   "ex": [
+    21,
+    34,
+    41
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "너무",
+   "count": 19,
+   "surfaces": {
+    "너무": 19
+   },
+   "forms": {},
+   "ex": [
+    85,
+    103,
+    107
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "같다",
+   "count": 18,
+   "surfaces": {
+    "같네": 1,
+    "같은": 9,
+    "같으면": 1,
+    "같아서": 1,
+    "같지": 1,
+    "같은데": 4,
+    "같죠": 1
+   },
+   "forms": {
+    "modifier": 9,
+    "cond": 1,
+    "aseo": 1
+   },
+   "ex": [
+    7,
+    55,
+    149
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "우리",
+   "count": 18,
+   "surfaces": {
+    "우리": 12,
+    "우리가": 3,
+    "우리는": 1,
+    "우리도": 1,
+    "우리랑": 1
+   },
+   "forms": {},
+   "ex": [
+    18,
+    30,
+    31
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "하나",
+   "count": 18,
+   "surfaces": {
+    "하나": 16,
+    "하나만": 2
+   },
+   "forms": {},
+   "ex": [
+    17,
+    21,
+    23
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "저",
+   "count": 16,
+   "surfaces": {
+    "저는": 8,
+    "저랑": 1,
+    "저도": 1,
+    "제가": 1,
+    "제": 2,
+    "저": 3
+   },
+   "forms": {},
+   "ex": [
+    33,
+    97,
+    106
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "언니",
+   "count": 15,
+   "surfaces": {
+    "언니가": 4,
+    "언니랑": 1,
+    "언니도": 1,
+    "언니": 9
+   },
+   "forms": {},
+   "ex": [
+    13,
+    34,
+    173
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "먹다",
+   "count": 14,
+   "surfaces": {
+    "먹는": 2,
+    "먹었습니다": 1,
+    "먹어야": 1,
+    "먹잖아": 1,
+    "먹고": 5,
+    "먹으면": 1,
+    "먹었는데": 1,
+    "먹을": 1,
+    "먹어요": 1
+   },
+   "forms": {
+    "modifier": 2,
+    "formalPast": 1,
+    "go": 5,
+    "cond": 1,
+    "polite": 1
+   },
+   "ex": [
+    89,
+    108,
+    175
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "여기",
+   "count": 14,
+   "surfaces": {
+    "여기는": 1,
+    "여기": 12,
+    "여기를": 1
+   },
+   "forms": {},
+   "ex": [
+    32,
+    57,
+    188
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "이렇다",
+   "count": 14,
+   "surfaces": {
+    "이렇게": 12,
+    "이러면서": 1,
+    "이랬으면": 1
+   },
+   "forms": {},
+   "ex": [
+    7,
+    277,
+    283
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "그렇다",
+   "count": 13,
+   "surfaces": {
+    "그렇구나": 1,
+    "그렇지": 1,
+    "그래야지": 1,
+    "그렇죠": 1,
+    "그래": 8,
+    "그렇게": 1
+   },
+   "forms": {},
+   "ex": [
+    138,
+    194,
+    267
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "것",
+   "count": 12,
+   "surfaces": {
+    "것처럼": 1,
+    "것도": 3,
+    "것": 8
+   },
+   "forms": {},
+   "ex": [
+    44,
+    89,
+    149
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "다",
+   "count": 12,
+   "surfaces": {
+    "다": 12
+   },
+   "forms": {},
+   "ex": [
+    1,
+    4,
+    30
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "오늘",
+   "count": 12,
+   "surfaces": {
+    "오늘": 8,
+    "오늘은": 4
+   },
+   "forms": {},
+   "ex": [
+    6,
+    10,
+    13
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "왜",
+   "count": 11,
+   "surfaces": {
+    "왜": 11
+   },
+   "forms": {},
+   "ex": [
+    24,
+    25,
+    26
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "이런",
+   "count": 11,
+   "surfaces": {
+    "이런": 11
+   },
+   "forms": {},
+   "ex": [
+    25,
+    28,
+    34
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "없다",
+   "count": 10,
+   "surfaces": {
+    "없어요": 3,
+    "없는": 2,
+    "없어": 3,
+    "없나": 1,
+    "없어야": 1
+   },
+   "forms": {
+    "polite": 3,
+    "modifier": 2
+   },
+   "ex": [
+    13,
+    14,
+    61
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "만들다",
+   "count": 8,
+   "surfaces": {
+    "만드는": 3,
+    "만들었는데": 1,
+    "만들": 1,
+    "만들어": 2,
+    "만들어야": 1
+   },
+   "forms": {
+    "modifier": 3
+   },
+   "ex": [
+    314,
+    333,
+    341
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "번",
+   "count": 8,
+   "surfaces": {
+    "번": 6,
+    "번은": 1,
+    "번만": 1
+   },
+   "forms": {},
+   "ex": [
+    297,
+    457,
+    458
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "좋다",
+   "count": 8,
+   "surfaces": {
+    "좋을": 1,
+    "좋아": 4,
+    "좋은데": 3
+   },
+   "forms": {},
+   "ex": [
+    166,
+    216,
+    218
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "해",
+   "count": 8,
+   "surfaces": {
+    "해에": 1,
+    "해야": 2,
+    "해": 5
+   },
+   "forms": {},
+   "ex": [
+    127,
+    137,
+    240
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "귀엽다",
+   "count": 7,
+   "surfaces": {
+    "귀여워": 4,
+    "귀여운": 1,
+    "귀엽지": 1,
+    "귀여운데": 1
+   },
+   "forms": {
+    "modifier": 1
+   },
+   "ex": [
+    270,
+    329,
+    367
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "날다",
+   "count": 7,
+   "surfaces": {
+    "난": 6,
+    "날": 1
+   },
+   "forms": {},
+   "ex": [
+    5,
+    73,
+    227
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "때",
+   "count": 7,
+   "surfaces": {
+    "때": 6,
+    "때마다": 1
+   },
+   "forms": {},
+   "ex": [
+    95,
+    130,
+    173
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "사람",
+   "count": 7,
+   "surfaces": {
+    "사람이": 2,
+    "사람": 5
+   },
+   "forms": {},
+   "ex": [
+    177,
+    203,
+    216
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "와",
+   "count": 7,
+   "surfaces": {
+    "와": 7
+   },
+   "forms": {},
+   "ex": [
+    154,
+    179,
+    236
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "지금",
+   "count": 7,
+   "surfaces": {
+    "지금": 7
+   },
+   "forms": {},
+   "ex": [
+    0,
+    77,
+    105
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "괜찮다",
+   "count": 6,
+   "surfaces": {
+    "괜찮아요": 2,
+    "괜찮습니다": 1,
+    "괜찮아": 2,
+    "괜찮은": 1
+   },
+   "forms": {
+    "polite": 2,
+    "formal": 1,
+    "modifier": 1
+   },
+   "ex": [
+    91,
+    92,
+    179
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "그거",
+   "count": 6,
+   "surfaces": {
+    "그거": 2,
+    "그거는": 1,
+    "그게": 1,
+    "그거야": 1,
+    "그거부터": 1
+   },
+   "forms": {},
+   "ex": [
+    40,
+    56,
+    137
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "느낌",
+   "count": 6,
+   "surfaces": {
+    "느낌": 6
+   },
+   "forms": {},
+   "ex": [
+    224,
+    225,
+    226
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "다르다",
+   "count": 6,
+   "surfaces": {
+    "다른": 6
+   },
+   "forms": {
+    "modifier": 6
+   },
+   "ex": [
+    48,
+    319,
+    396
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "더",
+   "count": 6,
+   "surfaces": {
+    "더": 6
+   },
+   "forms": {},
+   "ex": [
+    166,
+    214,
+    398
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "둘",
+   "count": 6,
+   "surfaces": {
+    "둘": 5,
+    "둘이": 1
+   },
+   "forms": {},
+   "ex": [
+    17,
+    42,
+    112
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "사다",
+   "count": 6,
+   "surfaces": {
+    "사도": 2,
+    "사야": 1,
+    "사려고": 1,
+    "사는": 1,
+    "사러": 1
+   },
+   "forms": {
+    "modifier": 1
+   },
+   "ex": [
+    16,
+    27,
+    40
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "일단",
+   "count": 6,
+   "surfaces": {
+    "일단": 6
+   },
+   "forms": {},
+   "ex": [
+    15,
+    59,
+    68
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "자다",
+   "count": 6,
+   "surfaces": {
+    "자": 6
+   },
+   "forms": {},
+   "ex": [
+    7,
+    9,
+    422
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "제일",
+   "count": 6,
+   "surfaces": {
+    "제일": 6
+   },
+   "forms": {},
+   "ex": [
+    288,
+    304,
+    313
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "그러면",
+   "count": 5,
+   "surfaces": {
+    "그럼": 5
+   },
+   "forms": {},
+   "ex": [
+    45,
+    65,
+    137
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "그런",
+   "count": 5,
+   "surfaces": {
+    "그런": 5
+   },
+   "forms": {},
+   "ex": [
+    38,
+    211,
+    226
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "누구",
+   "count": 5,
+   "surfaces": {
+    "누가": 5
+   },
+   "forms": {},
+   "ex": [
+    77,
+    381,
+    382
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "마음",
+   "count": 5,
+   "surfaces": {
+    "마음에": 4,
+    "마음도": 1
+   },
+   "forms": {},
+   "ex": [
+    324,
+    401,
+    424
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "말",
+   "count": 5,
+   "surfaces": {
+    "말도": 1,
+    "말을": 2,
+    "말이야": 1,
+    "말하고": 1
+   },
+   "forms": {},
+   "ex": [
+    33,
+    34,
+    99
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "오다",
+   "count": 5,
+   "surfaces": {
+    "와야": 1,
+    "오지": 2,
+    "왔어": 2
+   },
+   "forms": {},
+   "ex": [
+    95,
+    277,
+    283
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "일",
+   "count": 5,
+   "surfaces": {
+    "일": 2,
+    "일은": 1,
+    "일이": 1,
+    "일만": 1
+   },
+   "forms": {},
+   "ex": [
+    60,
+    62,
+    63
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "잘",
+   "count": 5,
+   "surfaces": {
+    "잘": 5
+   },
+   "forms": {},
+   "ex": [
+    75,
+    92,
+    94
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "저희",
+   "count": 5,
+   "surfaces": {
+    "저희가": 3,
+    "저희": 2
+   },
+   "forms": {},
+   "ex": [
+    35,
+    90,
+    551
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "좀",
+   "count": 5,
+   "surfaces": {
+    "좀": 5
+   },
+   "forms": {},
+   "ex": [
+    56,
+    221,
+    267
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "개",
+   "count": 4,
+   "surfaces": {
+    "개": 3,
+    "개만": 1
+   },
+   "forms": {},
+   "ex": [
+    16,
+    384,
+    387
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "걸다",
+   "count": 4,
+   "surfaces": {
+    "걸": 2,
+    "건": 2
+   },
+   "forms": {},
+   "ex": [
+    98,
+    426,
+    428
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "그래서",
+   "count": 4,
+   "surfaces": {
+    "그래서": 4
+   },
+   "forms": {},
+   "ex": [
+    157,
+    332,
+    337
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "꼭",
+   "count": 4,
+   "surfaces": {
+    "꼭": 4
+   },
+   "forms": {},
+   "ex": [
+    175,
+    203,
+    424
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "나오다",
+   "count": 4,
+   "surfaces": {
+    "나오면": 2,
+    "나와도": 1,
+    "나왔어": 1
+   },
+   "forms": {
+    "cond": 2
+   },
+   "ex": [
+    404,
+    406,
+    473
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "두다",
+   "count": 4,
+   "surfaces": {
+    "둔": 1,
+    "뒀어": 1,
+    "두면": 2
+   },
+   "forms": {
+    "cond": 2
+   },
+   "ex": [
+    327,
+    328,
+    339
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "마시다",
+   "count": 4,
+   "surfaces": {
+    "마셔": 1,
+    "마셨어요": 2,
+    "마셨어": 1
+   },
+   "forms": {
+    "past": 2
+   },
+   "ex": [
+    168,
+    256,
+    257
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "말하다",
+   "count": 4,
+   "surfaces": {
+    "말해야지": 1,
+    "말해도": 1,
+    "말한": 1,
+    "말할": 1
+   },
+   "forms": {},
+   "ex": [
+    13,
+    21,
+    105
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "맛있다",
+   "count": 4,
+   "surfaces": {
+    "맛있어요": 1,
+    "맛있어": 2,
+    "맛있죠": 1
+   },
+   "forms": {
+    "polite": 1
+   },
+   "ex": [
+    192,
+    194,
+    517
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "보이다",
+   "count": 4,
+   "surfaces": {
+    "보이는": 2,
+    "보이지": 2
+   },
+   "forms": {
+    "modifier": 2
+   },
+   "ex": [
+    210,
+    216,
+    218
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "살다",
+   "count": 4,
+   "surfaces": {
+    "살아": 4
+   },
+   "forms": {},
+   "ex": [
+    247,
+    248,
+    249
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "셋",
+   "count": 4,
+   "surfaces": {
+    "셋": 4
+   },
+   "forms": {},
+   "ex": [
+    17,
+    289,
+    461
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "수",
+   "count": 4,
+   "surfaces": {
+    "수": 4
+   },
+   "forms": {},
+   "ex": [
+    49,
+    260,
+    531
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "시",
+   "count": 4,
+   "surfaces": {
+    "시에": 2,
+    "시가": 2
+   },
+   "forms": {},
+   "ex": [
+    258,
+    273,
+    277
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "옷",
+   "count": 4,
+   "surfaces": {
+    "옷을": 1,
+    "옷은": 1,
+    "옷": 1,
+    "옷도": 1
+   },
+   "forms": {},
+   "ex": [
+    42,
+    45,
+    181
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "잠깐",
+   "count": 4,
+   "surfaces": {
+    "잠깐": 2,
+    "잠깐만": 2
+   },
+   "forms": {},
+   "ex": [
+    70,
+    71,
+    72
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "저거",
+   "count": 4,
+   "surfaces": {
+    "저거": 3,
+    "저것도": 1
+   },
+   "forms": {},
+   "ex": [
+    233,
+    234,
+    235
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "지나가다",
+   "count": 4,
+   "surfaces": {
+    "지나가면서": 1,
+    "지나갈": 1,
+    "지나가는": 1,
+    "지나가는데": 1
+   },
+   "forms": {
+    "modifier": 1
+   },
+   "ex": [
+    204,
+    232,
+    442
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "친구",
+   "count": 4,
+   "surfaces": {
+    "친구": 1,
+    "친구가": 3
+   },
+   "forms": {},
+   "ex": [
+    86,
+    150,
+    152
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "그냥",
+   "count": 3,
+   "surfaces": {
+    "그냥": 3
+   },
+   "forms": {},
+   "ex": [
+    166,
+    325,
+    473
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "그러니까",
+   "count": 3,
+   "surfaces": {
+    "그러니까": 3
+   },
+   "forms": {},
+   "ex": [
+    343,
+    544,
+    550
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "돈",
+   "count": 3,
+   "surfaces": {
+    "돈을": 2,
+    "돈": 1
+   },
+   "forms": {},
+   "ex": [
+    25,
+    28,
+    429
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "딱",
+   "count": 3,
+   "surfaces": {
+    "딱": 3
+   },
+   "forms": {},
+   "ex": [
+    180,
+    215,
+    258
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "많이",
+   "count": 3,
+   "surfaces": {
+    "많이": 3
+   },
+   "forms": {},
+   "ex": [
+    550,
+    551,
+    562
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "모르다",
+   "count": 3,
+   "surfaces": {
+    "모르겠어": 1,
+    "몰랐어": 2
+   },
+   "forms": {},
+   "ex": [
+    503,
+    569,
+    570
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "문",
+   "count": 3,
+   "surfaces": {
+    "문이": 3
+   },
+   "forms": {},
+   "ex": [
+    578,
+    579
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "밥",
+   "count": 3,
+   "surfaces": {
+    "밥": 3
+   },
+   "forms": {},
+   "ex": [
+    278,
+    344,
+    441
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "사진",
+   "count": 3,
+   "surfaces": {
+    "사진": 2,
+    "사진만": 1
+   },
+   "forms": {},
+   "ex": [
+    190,
+    228,
+    259
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "어떻게",
+   "count": 3,
+   "surfaces": {
+    "어떻게": 3
+   },
+   "forms": {},
+   "ex": [
+    314,
+    315,
+    317
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "엄마",
+   "count": 3,
+   "surfaces": {
+    "엄마가": 1,
+    "엄마": 2
+   },
+   "forms": {},
+   "ex": [
+    267,
+    287,
+    519
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "오빠",
+   "count": 3,
+   "surfaces": {
+    "오빠랑": 1,
+    "오빠가": 1,
+    "오빠나": 1
+   },
+   "forms": {},
+   "ex": [
+    229,
+    235,
+    238
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "울다",
+   "count": 3,
+   "surfaces": {
+    "울": 2,
+    "울어": 1
+   },
+   "forms": {},
+   "ex": [
+    408,
+    409,
+    410
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "응",
+   "count": 3,
+   "surfaces": {
+    "응": 3
+   },
+   "forms": {},
+   "ex": [
+    365,
+    501,
+    510
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "이제",
+   "count": 3,
+   "surfaces": {
+    "이제": 3
+   },
+   "forms": {},
+   "ex": [
+    161,
+    219,
+    575
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "처음",
+   "count": 3,
+   "surfaces": {
+    "처음": 3
+   },
+   "forms": {},
+   "ex": [
+    174,
+    416,
+    549
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "감사합니다",
+   "count": 2,
+   "surfaces": {
+    "감사합니다": 2
+   },
+   "forms": {},
+   "ex": [
+    93,
+    568
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "같이",
+   "count": 2,
+   "surfaces": {
+    "같이": 2
+   },
+   "forms": {},
+   "ex": [
+    130,
+    269
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "계속",
+   "count": 2,
+   "surfaces": {
+    "계속": 2
+   },
+   "forms": {},
+   "ex": [
+    18,
+    557
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "교환",
+   "count": 2,
+   "surfaces": {
+    "교환": 2
+   },
+   "forms": {},
+   "ex": [
+    389,
+    390
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "그래도",
+   "count": 2,
+   "surfaces": {
+    "그래도": 2
+   },
+   "forms": {},
+   "ex": [
+    549,
+    592
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "그리고",
+   "count": 2,
+   "surfaces": {
+    "그리고": 2
+   },
+   "forms": {},
+   "ex": [
+    54,
+    232
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "너",
+   "count": 2,
+   "surfaces": {
+    "너": 1,
+    "너는": 1
+   },
+   "forms": {},
+   "ex": [
+    105,
+    527
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "노래",
+   "count": 2,
+   "surfaces": {
+    "노래": 2
+   },
+   "forms": {},
+   "ex": [
+    249,
+    250
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "눈물",
+   "count": 2,
+   "surfaces": {
+    "눈물": 2
+   },
+   "forms": {},
+   "ex": [
+    227,
+    406
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "동네",
+   "count": 2,
+   "surfaces": {
+    "동네": 1,
+    "동네에": 1
+   },
+   "forms": {},
+   "ex": [
+    152,
+    159
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "동생",
+   "count": 2,
+   "surfaces": {
+    "동생은": 2
+   },
+   "forms": {},
+   "ex": [
+    239,
+    240
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "듣다",
+   "count": 2,
+   "surfaces": {
+    "듣고": 1,
+    "들어요": 1
+   },
+   "forms": {
+    "go": 1,
+    "polite": 1
+   },
+   "ex": [
+    492,
+    529
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "딸",
+   "count": 2,
+   "surfaces": {
+    "딸이야": 1,
+    "딸이": 1
+   },
+   "forms": {},
+   "ex": [
+    287,
+    288
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "뜨겁다",
+   "count": 2,
+   "surfaces": {
+    "뜨거워": 2
+   },
+   "forms": {},
+   "ex": [
+    516,
+    517
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "몇",
+   "count": 2,
+   "surfaces": {
+    "몇": 2
+   },
+   "forms": {},
+   "ex": [
+    171,
+    503
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "무섭다",
+   "count": 2,
+   "surfaces": {
+    "무서워": 1,
+    "무섭네": 1
+   },
+   "forms": {},
+   "ex": [
+    306,
+    572
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "바로",
+   "count": 2,
+   "surfaces": {
+    "바로": 2
+   },
+   "forms": {},
+   "ex": [
+    82,
+    176
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "방",
+   "count": 2,
+   "surfaces": {
+    "방에": 2
+   },
+   "forms": {},
+   "ex": [
+    339,
+    342
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "부르다",
+   "count": 2,
+   "surfaces": {
+    "부른": 1,
+    "부르고": 1
+   },
+   "forms": {
+    "go": 1
+   },
+   "ex": [
+    98,
+    254
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "빨리",
+   "count": 2,
+   "surfaces": {
+    "빨리": 2
+   },
+   "forms": {},
+   "ex": [
+    116,
+    442
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "사랑하다",
+   "count": 2,
+   "surfaces": {
+    "사랑할": 1,
+    "사랑해": 1
+   },
+   "forms": {},
+   "ex": [
+    49,
+    246
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "사실",
+   "count": 2,
+   "surfaces": {
+    "사실": 2
+   },
+   "forms": {},
+   "ex": [
+    384,
+    410
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "살",
+   "count": 2,
+   "surfaces": {
+    "살이": 1,
+    "살": 1
+   },
+   "forms": {},
+   "ex": [
+    127,
+    404
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "시간",
+   "count": 2,
+   "surfaces": {
+    "시간이야": 1,
+    "시간": 1
+   },
+   "forms": {},
+   "ex": [
+    219,
+    275
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "싫다",
+   "count": 2,
+   "surfaces": {
+    "싫어": 2
+   },
+   "forms": {},
+   "ex": [
+    385,
+    409
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "쓰다",
+   "count": 2,
+   "surfaces": {
+    "쓰면서": 1,
+    "쓰는": 1
+   },
+   "forms": {
+    "modifier": 1
+   },
+   "ex": [
+    155,
+    320
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "아이스크림",
+   "count": 2,
+   "surfaces": {
+    "아이스크림": 2
+   },
+   "forms": {},
+   "ex": [
+    440,
+    441
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "안녕하세요",
+   "count": 2,
+   "surfaces": {
+    "안녕하세요": 2
+   },
+   "forms": {},
+   "ex": [
+    89,
+    185
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "약속",
+   "count": 2,
+   "surfaces": {
+    "약속으로": 1,
+    "약속": 1
+   },
+   "forms": {},
+   "ex": [
+    277,
+    281
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "어제",
+   "count": 2,
+   "surfaces": {
+    "어제": 2
+   },
+   "forms": {},
+   "ex": [
+    108,
+    229
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "얼마나",
+   "count": 2,
+   "surfaces": {
+    "얼마나": 2
+   },
+   "forms": {},
+   "ex": [
+    439,
+    539
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "여행",
+   "count": 2,
+   "surfaces": {
+    "여행": 2
+   },
+   "forms": {},
+   "ex": [
+    173,
+    274
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "역시",
+   "count": 2,
+   "surfaces": {
+    "역시": 2
+   },
+   "forms": {},
+   "ex": [
+    5,
+    73
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "이사",
+   "count": 2,
+   "surfaces": {
+    "이사": 2
+   },
+   "forms": {},
+   "ex": [
+    151,
+    161
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "이해하다",
+   "count": 2,
+   "surfaces": {
+    "이해해": 2
+   },
+   "forms": {},
+   "ex": [
+    53,
+    54
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "자꾸",
+   "count": 2,
+   "surfaces": {
+    "자꾸": 1,
+    "자꾸만": 1
+   },
+   "forms": {},
+   "ex": [
+    275,
+    532
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "정말",
+   "count": 2,
+   "surfaces": {
+    "정말": 2
+   },
+   "forms": {},
+   "ex": [
+    159,
+    576
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "주다",
+   "count": 2,
+   "surfaces": {
+    "주고": 1,
+    "주면": 1
+   },
+   "forms": {
+    "go": 1,
+    "cond": 1
+   },
+   "ex": [
+    53,
+    355
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "줄",
+   "count": 2,
+   "surfaces": {
+    "줄": 2
+   },
+   "forms": {},
+   "ex": [
+    135,
+    531
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "중",
+   "count": 2,
+   "surfaces": {
+    "중에": 1,
+    "중": 1
+   },
+   "forms": {},
+   "ex": [
+    62,
+    345
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "집",
+   "count": 2,
+   "surfaces": {
+    "집에": 1,
+    "집에서는": 1
+   },
+   "forms": {},
+   "ex": [
+    365,
+    603
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "층",
+   "count": 2,
+   "surfaces": {
+    "층": 1,
+    "층에서": 1
+   },
+   "forms": {},
+   "ex": [
+    77,
+    543
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "카페",
+   "count": 2,
+   "surfaces": {
+    "카페": 2
+   },
+   "forms": {},
+   "ex": [
+    261,
+    523
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "혹시",
+   "count": 2,
+   "surfaces": {
+    "혹시": 2
+   },
+   "forms": {},
+   "ex": [
+    90,
+    171
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "화내다",
+   "count": 2,
+   "surfaces": {
+    "화내지": 2
+   },
+   "forms": {},
+   "ex": [
+    52
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "힘들다",
+   "count": 2,
+   "surfaces": {
+    "힘든데": 1,
+    "힘들어": 1
+   },
+   "forms": {},
+   "ex": [
+    293,
+    296
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "간식",
+   "count": 1,
+   "surfaces": {
+    "간식도": 1
+   },
+   "forms": {},
+   "ex": [
+    232
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "갑자기",
+   "count": 1,
+   "surfaces": {
+    "갑자기": 1
+   },
+   "forms": {},
+   "ex": [
+    585
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "거실",
+   "count": 1,
+   "surfaces": {
+    "거실": 1
+   },
+   "forms": {},
+   "ex": [
+    601
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "거의",
+   "count": 1,
+   "surfaces": {
+    "거의": 1
+   },
+   "forms": {},
+   "ex": [
+    294
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "거짓말",
+   "count": 1,
+   "surfaces": {
+    "거짓말": 1
+   },
+   "forms": {},
+   "ex": [
+    65
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "계획",
+   "count": 1,
+   "surfaces": {
+    "계획": 1
+   },
+   "forms": {},
+   "ex": [
+    55
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "고맙다",
+   "count": 1,
+   "surfaces": {
+    "고마워": 1
+   },
+   "forms": {},
+   "ex": [
+    220
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "고양이",
+   "count": 1,
+   "surfaces": {
+    "고양이도": 1
+   },
+   "forms": {},
+   "ex": [
+    421
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "기타",
+   "count": 1,
+   "surfaces": {
+    "기타": 1
+   },
+   "forms": {},
+   "ex": [
+    201
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "나쁘다",
+   "count": 1,
+   "surfaces": {
+    "나쁘지": 1
+   },
+   "forms": {},
+   "ex": [
+    463
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "나중",
+   "count": 1,
+   "surfaces": {
+    "나중에": 1
+   },
+   "forms": {},
+   "ex": [
+    226
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "날씨",
+   "count": 1,
+   "surfaces": {
+    "날씨가": 1
+   },
+   "forms": {},
+   "ex": [
+    85
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "내다",
+   "count": 1,
+   "surfaces": {
+    "내게": 1
+   },
+   "forms": {},
+   "ex": [
+    527
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "네",
+   "count": 1,
+   "surfaces": {
+    "네": 1
+   },
+   "forms": {},
+   "ex": [
+    170
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "눈",
+   "count": 1,
+   "surfaces": {
+    "눈에": 1
+   },
+   "forms": {},
+   "ex": [
+    210
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "다니다",
+   "count": 1,
+   "surfaces": {
+    "다니니까": 1
+   },
+   "forms": {},
+   "ex": [
+    231
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "다시",
+   "count": 1,
+   "surfaces": {
+    "다시": 1
+   },
+   "forms": {},
+   "ex": [
+    575
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "달다",
+   "count": 1,
+   "surfaces": {
+    "달지": 1
+   },
+   "forms": {},
+   "ex": [
+    199
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "들다",
+   "count": 1,
+   "surfaces": {
+    "드는": 1
+   },
+   "forms": {
+    "modifier": 1
+   },
+   "ex": [
+    424
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "들리다",
+   "count": 1,
+   "surfaces": {
+    "들리는": 1
+   },
+   "forms": {
+    "modifier": 1
+   },
+   "ex": [
+    601
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "등",
+   "count": 1,
+   "surfaces": {
+    "등": 1
+   },
+   "forms": {},
+   "ex": [
+    295
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "딸기",
+   "count": 1,
+   "surfaces": {
+    "딸기": 1
+   },
+   "forms": {},
+   "ex": [
+    251
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "떨어지다",
+   "count": 1,
+   "surfaces": {
+    "떨어졌는데": 1
+   },
+   "forms": {},
+   "ex": [
+    300
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "또",
+   "count": 1,
+   "surfaces": {
+    "또": 1
+   },
+   "forms": {},
+   "ex": [
+    492
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "만나다",
+   "count": 1,
+   "surfaces": {
+    "만나서": 1
+   },
+   "forms": {
+    "aseo": 1
+   },
+   "ex": [
+    277
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "맛",
+   "count": 1,
+   "surfaces": {
+    "맛": 1
+   },
+   "forms": {},
+   "ex": [
+    537
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "머리",
+   "count": 1,
+   "surfaces": {
+    "머리": 1
+   },
+   "forms": {},
+   "ex": [
+    6
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "멋있다",
+   "count": 1,
+   "surfaces": {
+    "멋있지": 1
+   },
+   "forms": {},
+   "ex": [
+    110
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "모자",
+   "count": 1,
+   "surfaces": {
+    "모자": 1
+   },
+   "forms": {},
+   "ex": [
+    320
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "무슨",
+   "count": 1,
+   "surfaces": {
+    "무슨": 1
+   },
+   "forms": {},
+   "ex": [
+    217
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "미국",
+   "count": 1,
+   "surfaces": {
+    "미국": 1
+   },
+   "forms": {},
+   "ex": [
+    537
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "바꾸다",
+   "count": 1,
+   "surfaces": {
+    "바꿔": 1
+   },
+   "forms": {},
+   "ex": [
+    254
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "받다",
+   "count": 1,
+   "surfaces": {
+    "받은": 1
+   },
+   "forms": {},
+   "ex": [
+    127
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "배달",
+   "count": 1,
+   "surfaces": {
+    "배달로": 1
+   },
+   "forms": {},
+   "ex": [
+    551
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "백화점",
+   "count": 1,
+   "surfaces": {
+    "백화점에": 1
+   },
+   "forms": {},
+   "ex": [
+    229
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "버리다",
+   "count": 1,
+   "surfaces": {
+    "버려": 1
+   },
+   "forms": {},
+   "ex": [
+    475
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "별로",
+   "count": 1,
+   "surfaces": {
+    "별로": 1
+   },
+   "forms": {},
+   "ex": [
+    401
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "보통",
+   "count": 1,
+   "surfaces": {
+    "보통": 1
+   },
+   "forms": {},
+   "ex": [
+    471
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "불",
+   "count": 1,
+   "surfaces": {
+    "불가": 1
+   },
+   "forms": {},
+   "ex": [
+    211
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "사고",
+   "count": 1,
+   "surfaces": {
+    "사고": 1
+   },
+   "forms": {},
+   "ex": [
+    371
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "산",
+   "count": 1,
+   "surfaces": {
+    "산": 1
+   },
+   "forms": {},
+   "ex": [
+    130
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "생각",
+   "count": 1,
+   "surfaces": {
+    "생각": 1
+   },
+   "forms": {},
+   "ex": [
+    242
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "생각하다",
+   "count": 1,
+   "surfaces": {
+    "생각해": 1
+   },
+   "forms": {},
+   "ex": [
+    238
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "생일",
+   "count": 1,
+   "surfaces": {
+    "생일": 1
+   },
+   "forms": {},
+   "ex": [
+    127
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "서로",
+   "count": 1,
+   "surfaces": {
+    "서로": 1
+   },
+   "forms": {},
+   "ex": [
+    219
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "선물",
+   "count": 1,
+   "surfaces": {
+    "선물": 1
+   },
+   "forms": {},
+   "ex": [
+    127
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "세우다",
+   "count": 1,
+   "surfaces": {
+    "세우지": 1
+   },
+   "forms": {},
+   "ex": [
+    55
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "소리",
+   "count": 1,
+   "surfaces": {
+    "소리": 1
+   },
+   "forms": {},
+   "ex": [
+    601
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "쇼핑",
+   "count": 1,
+   "surfaces": {
+    "쇼핑": 1
+   },
+   "forms": {},
+   "ex": [
+    325
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "시끄럽다",
+   "count": 1,
+   "surfaces": {
+    "시끄러워": 1
+   },
+   "forms": {},
+   "ex": [
+    560
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "시다",
+   "count": 1,
+   "surfaces": {
+    "시러": 1
+   },
+   "forms": {},
+   "ex": [
+    395
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "신호등",
+   "count": 1,
+   "surfaces": {
+    "신호등": 1
+   },
+   "forms": {},
+   "ex": [
+    96
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "씨",
+   "count": 1,
+   "surfaces": {
+    "씨가": 1
+   },
+   "forms": {},
+   "ex": [
+    36
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "아까",
+   "count": 1,
+   "surfaces": {
+    "아까": 1
+   },
+   "forms": {},
+   "ex": [
+    404
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "아빠",
+   "count": 1,
+   "surfaces": {
+    "아빠": 1
+   },
+   "forms": {},
+   "ex": [
+    287
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "아이",
+   "count": 1,
+   "surfaces": {
+    "아이": 1
+   },
+   "forms": {},
+   "ex": [
+    389
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "아이고",
+   "count": 1,
+   "surfaces": {
+    "아이고": 1
+   },
+   "forms": {},
+   "ex": [
+    464
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "아저씨",
+   "count": 1,
+   "surfaces": {
+    "아저씨": 1
+   },
+   "forms": {},
+   "ex": [
+    311
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "아파트",
+   "count": 1,
+   "surfaces": {
+    "아파트로": 1
+   },
+   "forms": {},
+   "ex": [
+    149
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "어디",
+   "count": 1,
+   "surfaces": {
+    "어디로": 1
+   },
+   "forms": {},
+   "ex": [
+    187
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "어떻다",
+   "count": 1,
+   "surfaces": {
+    "어때": 1
+   },
+   "forms": {},
+   "ex": [
+    193
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "어머",
+   "count": 1,
+   "surfaces": {
+    "어머": 1
+   },
+   "forms": {},
+   "ex": [
+    567
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "얼마",
+   "count": 1,
+   "surfaces": {
+    "얼마야": 1
+   },
+   "forms": {},
+   "ex": [
+    335
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "연습",
+   "count": 1,
+   "surfaces": {
+    "연습하고": 1
+   },
+   "forms": {},
+   "ex": [
+    0
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "예쁘다",
+   "count": 1,
+   "surfaces": {
+    "예쁜데": 1
+   },
+   "forms": {},
+   "ex": [
+    411
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "오렌지",
+   "count": 1,
+   "surfaces": {
+    "오렌지": 1
+   },
+   "forms": {},
+   "ex": [
+    7
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "올라가다",
+   "count": 1,
+   "surfaces": {
+    "올라가는데요": 1
+   },
+   "forms": {},
+   "ex": [
+    189
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "움직이다",
+   "count": 1,
+   "surfaces": {
+    "움직이자": 1
+   },
+   "forms": {},
+   "ex": [
+    258
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "위",
+   "count": 1,
+   "surfaces": {
+    "위": 1
+   },
+   "forms": {},
+   "ex": [
+    467
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "이미",
+   "count": 1,
+   "surfaces": {
+    "이미": 1
+   },
+   "forms": {},
+   "ex": [
+    37
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "이유",
+   "count": 1,
+   "surfaces": {
+    "이유가": 1
+   },
+   "forms": {},
+   "ex": [
+    34
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "자신",
+   "count": 1,
+   "surfaces": {
+    "자신이": 1
+   },
+   "forms": {},
+   "ex": [
+    124
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "조금",
+   "count": 1,
+   "surfaces": {
+    "조금": 1
+   },
+   "forms": {},
+   "ex": [
+    549
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "좋아하다",
+   "count": 1,
+   "surfaces": {
+    "좋아하는": 1
+   },
+   "forms": {
+    "modifier": 1
+   },
+   "ex": [
+    36
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "죄송하다",
+   "count": 1,
+   "surfaces": {
+    "죄송해요": 1
+   },
+   "forms": {
+    "polite": 1
+   },
+   "ex": [
+    93
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "짜다",
+   "count": 1,
+   "surfaces": {
+    "짤": 1
+   },
+   "forms": {},
+   "ex": [
+    221
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "찾다",
+   "count": 1,
+   "surfaces": {
+    "찾자": 1
+   },
+   "forms": {},
+   "ex": [
+    451
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "천천히",
+   "count": 1,
+   "surfaces": {
+    "천천히": 1
+   },
+   "forms": {},
+   "ex": [
+    443
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "초콜릿",
+   "count": 1,
+   "surfaces": {
+    "초콜릿": 1
+   },
+   "forms": {},
+   "ex": [
+    318
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "카드",
+   "count": 1,
+   "surfaces": {
+    "카드": 1
+   },
+   "forms": {},
+   "ex": [
+    474
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "크다",
+   "count": 1,
+   "surfaces": {
+    "크네": 1
+   },
+   "forms": {},
+   "ex": [
+    288
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "팔다",
+   "count": 1,
+   "surfaces": {
+    "팔아": 1
+   },
+   "forms": {},
+   "ex": [
+    89
+   ],
+   "include": true,
+   "needsCheck": true
+  },
+  {
+   "ko": "피아노",
+   "count": 1,
+   "surfaces": {
+    "피아노": 1
+   },
+   "forms": {},
+   "ex": [
+    202
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "한국",
+   "count": 1,
+   "surfaces": {
+    "한국에서": 1
+   },
+   "forms": {},
+   "ex": [
+    555
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "한번",
+   "count": 1,
+   "surfaces": {
+    "한번": 1
+   },
+   "forms": {},
+   "ex": [
+    80
+   ],
+   "include": true,
+   "needsCheck": false
+  },
+  {
+   "ko": "회사",
+   "count": 1,
+   "surfaces": {
+    "회사에": 1
+   },
+   "forms": {},
+   "ex": [
+    63
+   ],
+   "include": true,
+   "needsCheck": false
+  }
+ ],
+ "unknown": [
+  {
+   "ko": "아니",
+   "count": 23,
+   "ex": [
+    13,
+    34
+   ]
+  },
+  {
+   "ko": "우와",
+   "count": 14,
+   "ex": [
+    87,
+    88
+   ]
+  },
+  {
+   "ko": "맞아",
+   "count": 12,
+   "ex": [
+    57,
+    95
+   ]
+  },
+  {
+   "ko": "잠시",
+   "count": 10,
+   "ex": [
+    48,
+    265
+   ]
+  },
+  {
+   "ko": "맞아요",
+   "count": 7,
+   "ex": [
+    15,
+    120
+   ]
+  },
+  {
+   "ko": "약간",
+   "count": 7,
+   "ex": [
+    32,
+    224
+   ]
+  },
+  {
+   "ko": "차지",
+   "count": 7,
+   "ex": [
+    167,
+    168
+   ]
+  },
+  {
+   "ko": "귀엽다",
+   "count": 7,
+   "ex": [
+    321,
+    350
+   ]
+  },
+  {
+   "ko": "퇴칼",
+   "count": 6,
+   "ex": [
+    487,
+    491
+   ]
+  },
+  {
+   "ko": "거예요",
+   "count": 5,
+   "ex": [
+    14,
+    15
+   ]
+  },
+  {
+   "ko": "사옥",
+   "count": 5,
+   "ex": [
+    15,
+    59
+   ]
+  },
+  {
+   "ko": "진짜",
+   "count": 5,
+   "ex": [
+    19,
+    243
+   ]
+  },
+  {
+   "ko": "강아지",
+   "count": 5,
+   "ex": [
+    42,
+    44
+   ]
+  },
+  {
+   "ko": "늙크크",
+   "count": 5,
+   "ex": [
+    103,
+    104
+   ]
+  },
+  {
+   "ko": "미친",
+   "count": 5,
+   "ex": [
+    144,
+    145
+   ]
+  },
+  {
+   "ko": "오락실",
+   "count": 5,
+   "ex": [
+    205,
+    206
+   ]
+  },
+  {
+   "ko": "맨날",
+   "count": 5,
+   "ex": [
+    227,
+    416
+   ]
+  },
+  {
+   "ko": "공감",
+   "count": 4,
+   "ex": [
+    31,
+    45
+   ]
+  },
+  {
+   "ko": "뭔지",
+   "count": 4,
+   "ex": [
+    34,
+    134
+   ]
+  },
+  {
+   "ko": "어쨌든",
+   "count": 4,
+   "ex": [
+    58,
+    59
+   ]
+  },
+  {
+   "ko": "진심",
+   "count": 4,
+   "ex": [
+    63,
+    65
+   ]
+  },
+  {
+   "ko": "대박",
+   "count": 4,
+   "ex": [
+    145,
+    358
+   ]
+  },
+  {
+   "ko": "없이",
+   "count": 4,
+   "ex": [
+    247,
+    248
+   ]
+  },
+  {
+   "ko": "아냐",
+   "count": 4,
+   "ex": [
+    304,
+    392
+   ]
+  },
+  {
+   "ko": "이건",
+   "count": 4,
+   "ex": [
+    371,
+    405
+   ]
+  },
+  {
+   "ko": "은채",
+   "count": 3,
+   "ex": [
+    33,
+    251
+   ]
+  },
+  {
+   "ko": "뭔데",
+   "count": 3,
+   "ex": [
+    34,
+    405
+   ]
+  },
+  {
+   "ko": "사쿠라",
+   "count": 3,
+   "ex": [
+    36,
+    546
+   ]
+  },
+  {
+   "ko": "표정",
+   "count": 3,
+   "ex": [
+    38,
+    322
+   ]
+  },
+  {
+   "ko": "우와아",
+   "count": 3,
+   "ex": [
+    44,
+    70
+   ]
+  },
+  {
+   "ko": "공감데",
+   "count": 3,
+   "ex": [
+    46,
+    50
+   ]
+  },
+  {
+   "ko": "오오",
+   "count": 3,
+   "ex": [
+    79,
+    222
+   ]
+  },
+  {
+   "ko": "즈하",
+   "count": 3,
+   "ex": [
+    97,
+    340
+   ]
+  },
+  {
+   "ko": "뭐게",
+   "count": 3,
+   "ex": [
+    118,
+    121
+   ]
+  },
+  {
+   "ko": "그니까",
+   "count": 3,
+   "ex": [
+    142,
+    279
+   ]
+  },
+  {
+   "ko": "스와로브스키",
+   "count": 3,
+   "ex": [
+    178,
+    179
+   ]
+  },
+  {
+   "ko": "좋다",
+   "count": 3,
+   "ex": [
+    213,
+    467
+   ]
+  },
+  {
+   "ko": "싶다",
+   "count": 3,
+   "ex": [
+    233,
+    234
+   ]
+  },
+  {
+   "ko": "고장",
+   "count": 3,
+   "ex": [
+    300,
+    301
+   ]
+  },
+  {
+   "ko": "건가",
+   "count": 3,
+   "ex": [
+    301,
+    319
+   ]
+  },
+  {
+   "ko": "그만",
+   "count": 3,
+   "ex": [
+    326,
+    327
+   ]
+  },
+  {
+   "ko": "어쩌자고",
+   "count": 3,
+   "ex": [
+    333,
+    338
+   ]
+  },
+  {
+   "ko": "않아",
+   "count": 3,
+   "ex": [
+    347,
+    398
+   ]
+  },
+  {
+   "ko": "갖고",
+   "count": 3,
+   "ex": [
+    379,
+    468
+   ]
+  },
+  {
+   "ko": "아니면",
+   "count": 3,
+   "ex": [
+    383,
+    384
+   ]
+  },
+  {
+   "ko": "제발",
+   "count": 3,
+   "ex": [
+    414,
+    460
+   ]
+  },
+  {
+   "ko": "치이카",
+   "count": 3,
+   "ex": [
+    446,
+    447
+   ]
+  },
+  {
+   "ko": "최애",
+   "count": 3,
+   "ex": [
+    451,
+    452
+   ]
+  },
+  {
+   "ko": "칼퇴",
+   "count": 3,
+   "ex": [
+    490,
+    497
+   ]
+  },
+  {
+   "ko": "감사합니다아",
+   "count": 3,
+   "ex": [
+    506,
+    561
+   ]
+  },
+  {
+   "ko": "서비스",
+   "count": 3,
+   "ex": [
+    509,
+    510
+   ]
+  },
+  {
+   "ko": "진짜요",
+   "count": 3,
+   "ex": [
+    563,
+    568
+   ]
+  },
+  {
+   "ko": "불안이",
+   "count": 3,
+   "ex": [
+    584,
+    585
+   ]
+  },
+  {
+   "ko": "기운",
+   "count": 3,
+   "ex": [
+    586,
+    587
+   ]
+  },
+  {
+   "ko": "쓴다고",
+   "count": 2,
+   "ex": [
+    1,
+    4
+   ]
+  },
+  {
+   "ko": "브라운",
+   "count": 2,
+   "ex": [
+    5,
+    75
+   ]
+  },
+  {
+   "ko": "다들",
+   "count": 2,
+   "ex": [
+    8,
+    182
+   ]
+  },
+  {
+   "ko": "어떡해",
+   "count": 2,
+   "ex": [
+    16,
+    404
+   ]
+  },
+  {
+   "ko": "이러고",
+   "count": 2,
+   "ex": [
+    18,
+    557
+   ]
+  },
+  {
+   "ko": "예요",
+   "count": 2,
+   "ex": [
+    31,
+    82
+   ]
+  },
+  {
+   "ko": "때문",
+   "count": 2,
+   "ex": [
+    36,
+    249
+   ]
+  },
+  {
+   "ko": "그건",
+   "count": 2,
+   "ex": [
+    45,
+    239
+   ]
+  },
+  {
+   "ko": "뭐래",
+   "count": 2,
+   "ex": [
+    46,
+    47
+   ]
+  },
+  {
+   "ko": "캐릭터",
+   "count": 2,
+   "ex": [
+    48,
+    49
+   ]
+  },
+  {
+   "ko": "않기",
+   "count": 2,
+   "ex": [
+    52
+   ]
+  },
+  {
+   "ko": "주기",
+   "count": 2,
+   "ex": [
+    54,
+    132
+   ]
+  },
+  {
+   "ko": "코르티스",
+   "count": 2,
+   "ex": [
+    78,
+    86
+   ]
+  },
+  {
+   "ko": "가보자",
+   "count": 2,
+   "ex": [
+    79,
+    80
+   ]
+  },
+  {
+   "ko": "윤진",
+   "count": 2,
+   "ex": [
+    97,
+    340
+   ]
+  },
+  {
+   "ko": "에픽하",
+   "count": 2,
+   "ex": [
+    99,
+    105
+   ]
+  },
+  {
+   "ko": "선배님들",
+   "count": 2,
+   "ex": [
+    99,
+    105
+   ]
+  },
+  {
+   "ko": "대게",
+   "count": 2,
+   "ex": [
+    108
+   ]
+  },
+  {
+   "ko": "아아",
+   "count": 2,
+   "ex": [
+    113,
+    531
+   ]
+  },
+  {
+   "ko": "샤넬",
+   "count": 2,
+   "ex": [
+    121
+   ]
+  },
+  {
+   "ko": "사준",
+   "count": 2,
+   "ex": [
+    126
+   ]
+  },
+  {
+   "ko": "모오오게",
+   "count": 2,
+   "ex": [
+    128,
+    129
+   ]
+  },
+  {
+   "ko": "갔을",
+   "count": 2,
+   "ex": [
+    130,
+    173
+   ]
+  },
+  {
+   "ko": "마자마자",
+   "count": 2,
+   "ex": [
+    131,
+    135
+   ]
+  },
+  {
+   "ko": "공감해",
+   "count": 2,
+   "ex": [
+    132,
+    531
+   ]
+  },
+  {
+   "ko": "그랬구",
+   "count": 2,
+   "ex": [
+    138,
+    141
+   ]
+  },
+  {
+   "ko": "가가지구",
+   "count": 2,
+   "ex": [
+    151,
+    161
+   ]
+  },
+  {
+   "ko": "흐름",
+   "count": 2,
+   "ex": [
+    154,
+    156
+   ]
+  },
+  {
+   "ko": "뇌를",
+   "count": 2,
+   "ex": [
+    155,
+    156
+   ]
+  },
+  {
+   "ko": "그렇겠다",
+   "count": 2,
+   "ex": [
+    164,
+    165
+   ]
+  },
+  {
+   "ko": "가만히",
+   "count": 2,
+   "ex": [
+    166,
+    260
+   ]
+  },
+  {
+   "ko": "같애",
+   "count": 2,
+   "ex": [
+    166,
+    602
+   ]
+  },
+  {
+   "ko": "단톡",
+   "count": 2,
+   "ex": [
+    174,
+    176
+   ]
+  },
+  {
+   "ko": "된다고",
+   "count": 2,
+   "ex": [
+    175,
+    238
+   ]
+  },
+  {
+   "ko": "완전",
+   "count": 2,
+   "ex": [
+    194,
+    195
+   ]
+  },
+  {
+   "ko": "스타일",
+   "count": 2,
+   "ex": [
+    195,
+    265
+   ]
+  },
+  {
+   "ko": "무조건",
+   "count": 2,
+   "ex": [
+    204,
+    254
+   ]
+  },
+  {
+   "ko": "보여주면",
+   "count": 2,
+   "ex": [
+    211,
+    212
+   ]
+  },
+  {
+   "ko": "여유",
+   "count": 2,
+   "ex": [
+    213,
+    262
+   ]
+  },
+  {
+   "ko": "와아",
+   "count": 2,
+   "ex": [
+    220,
+    242
+   ]
+  },
+  {
+   "ko": "어어",
+   "count": 2,
+   "ex": [
+    269,
+    477
+   ]
+  },
+  {
+   "ko": "콘셉트",
+   "count": 2,
+   "ex": [
+    286,
+    287
+   ]
+  },
+  {
+   "ko": "할래",
+   "count": 2,
+   "ex": [
+    290,
+    398
+   ]
+  },
+  {
+   "ko": "싶어",
+   "count": 2,
+   "ex": [
+    291,
+    371
+   ]
+  },
+  {
+   "ko": "파이팅",
+   "count": 2,
+   "ex": [
+    294
+   ]
+  },
+  {
+   "ko": "설마",
+   "count": 2,
+   "ex": [
+    299,
+    300
+   ]
+  },
+  {
+   "ko": "조심",
+   "count": 2,
+   "ex": [
+    302,
+    474
+   ]
+  },
+  {
+   "ko": "홍은채",
+   "count": 2,
+   "ex": [
+    328,
+    437
+   ]
+  },
+  {
+   "ko": "윤진이",
+   "count": 2,
+   "ex": [
+    355,
+    360
+   ]
+  },
+  {
+   "ko": "핫걸",
+   "count": 2,
+   "ex": [
+    362,
+    363
+   ]
+  },
+  {
+   "ko": "고마워어",
+   "count": 2,
+   "ex": [
+    363,
+    364
+   ]
+  },
+  {
+   "ko": "하나씩",
+   "count": 2,
+   "ex": [
+    377,
+    378
+   ]
+  },
+  {
+   "ko": "싶은",
+   "count": 2,
+   "ex": [
+    379,
+    480
+   ]
+  },
+  {
+   "ko": "사주면",
+   "count": 2,
+   "ex": [
+    380
+   ]
+  },
+  {
+   "ko": "핑크",
+   "count": 2,
+   "ex": [
+    383,
+    423
+   ]
+  },
+  {
+   "ko": "얘도",
+   "count": 2,
+   "ex": [
+    383,
+    385
+   ]
+  },
+  {
+   "ko": "열려",
+   "count": 2,
+   "ex": [
+    391,
+    579
+   ]
+  },
+  {
+   "ko": "우와아아",
+   "count": 2,
+   "ex": [
+    418,
+    420
+   ]
+  },
+  {
+   "ko": "까보",
+   "count": 2,
+   "ex": [
+    453,
+    454
+   ]
+  },
+  {
+   "ko": "뜯는다",
+   "count": 2,
+   "ex": [
+    459,
+    472
+   ]
+  },
+  {
+   "ko": "기세",
+   "count": 2,
+   "ex": [
+    467
+   ]
+  },
+  {
+   "ko": "다음",
+   "count": 2,
+   "ex": [
+    468
+   ]
+  },
+  {
+   "ko": "하트",
+   "count": 2,
+   "ex": [
+    469,
+    471
+   ]
+  },
+  {
+   "ko": "뭐지",
+   "count": 2,
+   "ex": [
+    469,
+    581
+   ]
+  },
+  {
+   "ko": "퇴칼이요",
+   "count": 2,
+   "ex": [
+    484,
+    485
+   ]
+  },
+  {
+   "ko": "하셨지",
+   "count": 2,
+   "ex": [
+    488,
+    495
+   ]
+  },
+  {
+   "ko": "실수",
+   "count": 2,
+   "ex": [
+    508
+   ]
+  },
+  {
+   "ko": "멍푸치노",
+   "count": 2,
+   "ex": [
+    524,
+    525
+   ]
+  },
+  {
+   "ko": "비주얼",
+   "count": 2,
+   "ex": [
+    535,
+    536
+   ]
+  },
+  {
+   "ko": "낭만",
+   "count": 2,
+   "ex": [
+    542,
+    544
+   ]
+  },
+  {
+   "ko": "시켜",
+   "count": 2,
+   "ex": [
+    552,
+    563
+   ]
+  },
+  {
+   "ko": "모카",
+   "count": 2,
+   "ex": [
+    553
+   ]
+  },
+  {
+   "ko": "버터떡",
+   "count": 2,
+   "ex": [
+    554
+   ]
+  },
+  {
+   "ko": "무의식",
+   "count": 2,
+   "ex": [
+    571
+   ]
+  },
+  {
+   "ko": "열려요",
+   "count": 2,
+   "ex": [
+    578
+   ]
+  },
+  {
+   "ko": "아아안대애애",
+   "count": 1,
+   "ex": [
+    2
+   ]
+  },
+  {
+   "ko": "색깔",
+   "count": 1,
+   "ex": [
+    6
+   ]
+  },
+  {
+   "ko": "조용",
+   "count": 1,
+   "ex": [
+    8
+   ]
+  },
+  {
+   "ko": "거죠",
+   "count": 1,
+   "ex": [
+    11
+   ]
+  },
+  {
+   "ko": "빨리요오오",
+   "count": 1,
+   "ex": [
+    12
+   ]
+  },
+  {
+   "ko": "조용히",
+   "count": 1,
+   "ex": [
+    13
+   ]
+  },
+  {
+   "ko": "탈출할",
+   "count": 1,
+   "ex": [
+    15
+   ]
+  },
+  {
+   "ko": "중독됐어",
+   "count": 1,
+   "ex": [
+    20
+   ]
+  },
+  {
+   "ko": "뭐요",
+   "count": 1,
+   "ex": [
+    22
+   ]
+  },
+  {
+   "ko": "제안인데",
+   "count": 1,
+   "ex": [
+    23
+   ]
+  },
+  {
+   "ko": "사냐",
+   "count": 1,
+   "ex": [
+    24
+   ]
+  },
+  {
+   "ko": "쓰냐",
+   "count": 1,
+   "ex": [
+    25
+   ]
+  },
+  {
+   "ko": "싸냐",
+   "count": 1,
+   "ex": [
+    26
+   ]
+  },
+  {
+   "ko": "되냐",
+   "count": 1,
+   "ex": [
+    27
+   ]
+  },
+  {
+   "ko": "쓰는지",
+   "count": 1,
+   "ex": [
+    28
+   ]
+  },
+  {
+   "ko": "모르겠다",
+   "count": 1,
+   "ex": [
+    28
+   ]
+  },
+  {
+   "ko": "아무래",
+   "count": 1,
+   "ex": [
+    30
+   ]
+  },
+  {
+   "ko": "반반인데",
+   "count": 1,
+   "ex": [
+    33
+   ]
+  },
+  {
+   "ko": "곳에",
+   "count": 1,
+   "ex": [
+    35
+   ]
+  },
+  {
+   "ko": "것들",
+   "count": 1,
+   "ex": [
+    36
+   ]
+  },
+  {
+   "ko": "천지이기",
+   "count": 1,
+   "ex": [
+    36
+   ]
+  },
+  {
+   "ko": "시작됐어요",
+   "count": 1,
+   "ex": [
+    37
+   ]
+  },
+  {
+   "ko": "진짜루우우",
+   "count": 1,
+   "ex": [
+    40
+   ]
+  },
+  {
+   "ko": "있다",
+   "count": 1,
+   "ex": [
+    42
+   ]
+  },
+  {
+   "ko": "똑같",
+   "count": 1,
+   "ex": [
+    43
+   ]
+  },
+  {
+   "ko": "이해가잖아",
+   "count": 1,
+   "ex": [
+    45
+   ]
+  },
+  {
+   "ko": "이해",
+   "count": 1,
+   "ex": [
+    48
+   ]
+  },
+  {
+   "ko": "당연히",
+   "count": 1,
+   "ex": [
+    49
+   ]
+  },
+  {
+   "ko": "거잖아",
+   "count": 1,
+   "ex": [
+    49
+   ]
+  },
+  {
+   "ko": "공감데이",
+   "count": 1,
+   "ex": [
+    50
+   ]
+  },
+  {
+   "ko": "절대",
+   "count": 1,
+   "ex": [
+    55
+   ]
+  },
+  {
+   "ko": "않습니다",
+   "count": 1,
+   "ex": [
+    55
+   ]
+  },
+  {
+   "ko": "없음",
+   "count": 1,
+   "ex": [
+    55
+   ]
+  },
+  {
+   "ko": "스읍",
+   "count": 1,
+   "ex": [
+    56
+   ]
+  },
+  {
+   "ko": "곤란한데요",
+   "count": 1,
+   "ex": [
+    56
+   ]
+  },
+  {
+   "ko": "잖아",
+   "count": 1,
+   "ex": [
+    57
+   ]
+  },
+  {
+   "ko": "벗어",
+   "count": 1,
+   "ex": [
+    59
+   ]
+  },
+  {
+   "ko": "탈출기",
+   "count": 1,
+   "ex": [
+    59
+   ]
+  },
+  {
+   "ko": "깜짝아",
+   "count": 1,
+   "ex": [
+    61
+   ]
+  },
+  {
+   "ko": "있을걸",
+   "count": 1,
+   "ex": [
+    63
+   ]
+  },
+  {
+   "ko": "아니고",
+   "count": 1,
+   "ex": [
+    64
+   ]
+  },
+  {
+   "ko": "일이라니까",
+   "count": 1,
+   "ex": [
+    64
+   ]
+  },
+  {
+   "ko": "신난다앙",
+   "count": 1,
+   "ex": [
+    70
+   ]
+  },
+  {
+   "ko": "이야",
+   "count": 1,
+   "ex": [
+    71
+   ]
+  },
+  {
+   "ko": "신난다",
+   "count": 1,
+   "ex": [
+    71
+   ]
+  },
+  {
+   "ko": "웜톤",
+   "count": 1,
+   "ex": [
+    74
+   ]
+  },
+  {
+   "ko": "어울려어",
+   "count": 1,
+   "ex": [
+    75
+   ]
+  },
+  {
+   "ko": "팝업",
+   "count": 1,
+   "ex": [
+    77
+   ]
+  },
+  {
+   "ko": "누나들",
+   "count": 1,
+   "ex": [
+    83
+   ]
+  },
+  {
+   "ko": "사줄게",
+   "count": 1,
+   "ex": [
+    83
+   ]
+  },
+  {
+   "ko": "어뜩해",
+   "count": 1,
+   "ex": [
+    84
+   ]
+  },
+  {
+   "ko": "좋자나아아",
+   "count": 1,
+   "ex": [
+    85
+   ]
+  },
+  {
+   "ko": "좋아하는데",
+   "count": 1,
+   "ex": [
+    86
+   ]
+  },
+  {
+   "ko": "르세라핌인데",
+   "count": 1,
+   "ex": [
+    90
+   ]
+  },
+  {
+   "ko": "가능하신지요",
+   "count": 1,
+   "ex": [
+    90
+   ]
+  },
+  {
+   "ko": "와야겠다",
+   "count": 1,
+   "ex": [
+    95
+   ]
+  },
+  {
+   "ko": "바뀌었어",
+   "count": 1,
+   "ex": [
+    96
+   ]
+  },
+  {
+   "ko": "라이브",
+   "count": 1,
+   "ex": [
+    97
+   ]
+  },
+  {
+   "ko": "최근",
+   "count": 1,
+   "ex": [
+    99
+   ]
+  },
+  {
+   "ko": "불렀단",
+   "count": 1,
+   "ex": [
+    99
+   ]
+  },
+  {
+   "ko": "똑같다고오",
+   "count": 1,
+   "ex": [
+    102
+   ]
+  },
+  {
+   "ko": "늙크크네",
+   "count": 1,
+   "ex": [
+    103
+   ]
+  },
+  {
+   "ko": "웃겼어",
+   "count": 1,
+   "ex": [
+    103
+   ]
+  },
+  {
+   "ko": "언니들",
+   "count": 1,
+   "ex": [
+    105
+   ]
+  },
+  {
+   "ko": "거야아아",
+   "count": 1,
+   "ex": [
+    105
+   ]
+  },
+  {
+   "ko": "구독자입니다아",
+   "count": 1,
+   "ex": [
+    106
+   ]
+  },
+  {
+   "ko": "재밌게",
+   "count": 1,
+   "ex": [
+    107
+   ]
+  },
+  {
+   "ko": "있어여",
+   "count": 1,
+   "ex": [
+    107
+   ]
+  },
+  {
+   "ko": "어버이날이라",
+   "count": 1,
+   "ex": [
+    109
+   ]
+  },
+  {
+   "ko": "쐈습니다아",
+   "count": 1,
+   "ex": [
+    109
+   ]
+  },
+  {
+   "ko": "눈부시다",
+   "count": 1,
+   "ex": [
+    111
+   ]
+  }
+ ],
+ "linesFile": "lines/VNqx61p7XPg.json"
+}

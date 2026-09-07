@@ -28,7 +28,15 @@
       index = Array.isArray(list) ? list : [];
       return Promise.all(index.map(function (it) {
         return fetchJSON('decks/' + it.id + '.json')
-          .then(function (d) { decks[it.id] = d; })
+          .then(function (d) {
+            decks[it.id] = d;
+            // 字幕の本文は手元にあるときだけ読む（公開リポジトリには含まれない）。
+            // 無くても語彙データだけで出題できる（例文が出ないだけ）。
+            return fetchJSON('decks/lines/' + it.id + '.json').then(
+              function (x) { d.lines = x.lines || []; },
+              function () { d.lines = []; }
+            );
+          })
           .catch(function (e) { console.warn('デッキ読み込み失敗', it.id, e); });
       }));
     }).then(function () { return index; }, function (e) {
