@@ -117,6 +117,7 @@
     var o = { scope: OPT.scope };
     if (deck) {
       o.nouns = deck.nouns; o.preds = deck.preds; o.others = deck.others; o.meta = deck.meta;
+      o.videoId = deck.videoId;
       o.scope = 'basic';        // デッキの用言は手作りの skip 情報が無いので基本5形に固定
     }
     return o;
@@ -151,6 +152,18 @@
     renderQuestion();
   }
 
+  /** 動画のその単語が出てくる位置へのリンク（デッキ由来の問題だけ） */
+  function seekLinks(q) {
+    if (!q.seek || !q.seek.at || !q.seek.at.length) return '';
+    var links = q.seek.at.map(function (ms) {
+      var sec = Math.max(0, Math.floor((ms || 0) / 1000) - 1);   // 1秒手前から再生する
+      var label = Math.floor(sec / 60) + ':' + ('0' + (sec % 60)).slice(-2);
+      return '<a class="seek" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=' +
+        encodeURIComponent(q.seek.v) + '&t=' + sec + 's">▶ ' + label + '</a>';
+    }).join('');
+    return '<div class="seek-row"><span>動画で聞く</span>' + links + '</div>';
+  }
+
   /** 進捗カウンタ（何問目 / 全問）と連続正解 */
   function renderCounter() {
     $('counter').innerHTML =
@@ -182,7 +195,8 @@
       html += '<div class="choices' + (q.longChoices ? ' long' : '') + '" id="choices">';
       q.choices.forEach(function (c, i) {
         html += '<div class="choice" role="button" tabindex="0" data-i="' + i + '">' +
-          '<span class="num">' + (i + 1) + '</span><span>' + escapeHtml(c) + '</span>' +
+          '<span class="num">' + (i + 1) + '</span>' +
+          '<span class="ctext"><span>' + escapeHtml(c) + '</span></span>' +
           SPEECH.btn(c, 'sm') + '</div>';
       });
       html += '</div>';
@@ -300,6 +314,13 @@
         b.classList.remove('sel');
         if (norm(q.choices[i]) === norm(q.answer)) b.classList.add('ok');
         else if (i === S.selected) b.classList.add('ng');
+        // 選ばなかった選択肢が何だったのかも見せる
+        var note = q.choiceInfo && q.choiceInfo[q.choices[i]];
+        var box = b.querySelector('.ctext');
+        if (note && box && !box.querySelector('.note')) {
+          box.insertAdjacentHTML('beforeend',
+            '<span class="note">' + escapeHtml(note) + SPEECH.btn(note, 'sm') + '</span>');
+        }
       });
     } else {
       Array.prototype.forEach.call($('answer-line').querySelectorAll('.tile'), function (b) {
@@ -313,9 +334,10 @@
     var spoken = q.speakTarget || (SPEECH.isKorean(q.answer) ? q.answer
       : (SPEECH.isKorean(q.word_main) ? q.word_main : q.word.ko));
     $('verdict-head').innerHTML = (correct ? '✅ 正解！' : '❌ 正解はこちら') + SPEECH.btn(spoken);
-    $('verdict-detail').innerHTML = correct
+    $('verdict-detail').innerHTML = (correct
       ? escapeHtml(q.explain)
-      : '<b>' + escapeHtml(q.answer) + '</b>' + SPEECH.btn(q.answer, 'sm') + '<br>' + escapeHtml(q.explain);
+      : '<b>' + escapeHtml(q.answer) + '</b>' + SPEECH.btn(q.answer, 'sm') + '<br>' + escapeHtml(q.explain))
+      + seekLinks(q);
     if (!correct && OPT.autoSpeak !== 'off') setTimeout(function () { speakNow(spoken); }, 150);
     $('footer-spacer').style.display = 'none';
     $('btn-main').textContent = 'つづける';
@@ -357,7 +379,8 @@
       var headword = SPEECH.isKorean(q.answer) ? q.answer
         : (q.kind === 'listen' ? q.answer : q.word_main + ' → ' + q.answer);
       items.push('<div class="review-item"><b>' + escapeHtml(headword) + '</b> ' +
-        SPEECH.btn(sp, 'sm') + ' <span class="ja">' + escapeHtml(q.explain) + '</span></div>');
+        SPEECH.btn(sp, 'sm') + ' <span class="ja">' + escapeHtml(q.explain) + '</span>' +
+        seekLinks(q) + '</div>');
     });
     $('res-review').innerHTML = items.length
       ? '<h3>復習しよう（' + items.length + '）</h3>' + items.join('')
@@ -378,6 +401,7 @@
     if (!box || !window.DECKS) return;
     var items = DECKS.list();
     if (!items.length) {
+      log('動画デッキ: 0件');
       box.innerHTML = '<div class="deck-empty">' + (document.body.classList.contains('no-admin')
         ? 'ここには動画から作ったデッキが並びます。作るには手元で <code>uv run server.py</code> を起動して' +
           ' 問題作成管理画面（admin.html）を開いてください。'
@@ -396,7 +420,9 @@
       return '<div class="deck-card">' +
         '<div class="deck-head">' +
         '<span class="ic">📺</span>' +
-        '<div class="tt"><strong>' + escapeHtml(it.title) + '</strong>' +
+        '<div class="tt"><strong><a class="deck-title" target="_blank" rel="noopener" ' +
+        'title="YouTube で開く" href="https://www.youtube.com/watch?v=' + encodeURIComponent(it.id) + '">' +
+        '<span class="yt">▶</span>' + escapeHtml(it.title) + '</a></strong>' +
         '<span>' + (p.nouns.length + p.preds.length + p.others.length) + '語（名詞 ' + p.nouns.length +
         ' / 用言 ' + p.preds.length + (p.others.length ? ' / 副詞など ' + p.others.length : '') + '）' +
         (it.unknown ? '・辞書外 ' + it.unknown + '語' : '') +

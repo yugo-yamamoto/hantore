@@ -117,38 +117,51 @@
     if (key === 'aseo')     t(function () { return stem + '어서'; });
     return out;
   }
+  /** 誤答の候補を { s: 表層形, note: それが何なのか } で返す */
   function conjDistractors(w, key, correct) {
     var out = [];
+    function add(s, note) { if (s) out.push({ s: s, note: note }); }
     if (w.irr) {
       var plain = {}; Object.keys(w).forEach(function (k) { plain[k] = w[k]; }); plain.irr = null;
-      try { out.push(KO.conjugate(plain, key)); } catch (e) { }
+      try { add(KO.conjugate(plain, key), KO.irrLabel(w) + 'を無視した形（誤り）'); } catch (e) { }
     }
-    var f = flipHarmony(w, correct); if (f) out.push(f);
-    out = out.concat(endingMistake(w, key, correct));
+    add(flipHarmony(w, correct), '母音調和を間違えた形（誤り）');
+    endingMistake(w, key, correct).forEach(function (v) { add(v, '語尾の付け方を間違えた形（誤り）'); });
     KO.formsFor(w).forEach(function (fm) {
-      if (fm.key !== key) { try { out.push(fm.fn(w)); } catch (e) { } }
+      if (fm.key === key) return;
+      try { add(fm.fn(w), w.ko + 'の' + fm.label); } catch (e) { }
     });
-    return uniq(out).filter(function (s) { return norm(s) !== norm(correct); });
+    var seen = {};
+    return out.filter(function (d) {
+      if (!d.s || norm(d.s) === norm(correct) || seen[d.s]) return false;
+      seen[d.s] = 1; return true;
+    });
   }
 
-  /** 選択肢を4つに満たすまで埋める（デッキが小さいときの保険） */
-  function padChoices(choices, correct, word, dir, pool, sameCatOnly) {
+  /** 選択肢の語を4つに満たすまで埋める（デッキが小さいときの保険） */
+  function padWords(words, word, pool) {
     var base = basePool(word);
-    var val = function (x) { return dir === 'ko2ja' ? x.ja : x.ko; };
     var sources = [
       pool.filter(function (x) { return x.cat === word.cat; }),   // 同カテゴリのデッキ語
       base.filter(function (x) { return x.cat === word.cat; }),   // 同カテゴリの辞書語
       base.filter(function (x) { return x.type === word.type; })  // 同じ品詞の辞書語
     ];
-    for (var s = 0; s < sources.length && choices.length < 4; s++) {
+    for (var s = 0; s < sources.length && words.length < 4; s++) {
       shuffle(sources[s]).forEach(function (x) {
-        if (choices.length >= 4) return;
+        if (words.length >= 4) return;
         if (!usableAsWrong(x, word)) return;                      // 訳が同じ語・同義語は「もう一つの正解」になる
-        var v = val(x);
-        if (choices.indexOf(v) < 0) choices.push(v);
+        if (words.some(function (y) { return y.ko === x.ko; })) return;
+        words.push(x);
       });
     }
-    return choices;
+    return words;
+  }
+
+  /** 動画のその単語が出てくる位置（シークリンク用） */
+  function seekOf(word, opts) {
+    var m = opts && opts.meta && opts.meta[word.ko];
+    if (!opts || !opts.videoId || !m || !m.at || !m.at.length) return null;
+    return { v: opts.videoId, at: m.at.slice(0, 3) };
   }
 
   /* ============================================================
@@ -169,16 +182,24 @@
     var src = shuffle(same.length >= 3 ? same : others).slice(0, 3);
     var typeTag = posLabel(word);
     var ko2ja = dir === 'ko2ja';
-    var choices = [ko2ja ? word.ja : word.ko].concat(src.map(function (x) { return ko2ja ? x.ja : x.ko; }));
-    padChoices(choices, ko2ja ? word.ja : word.ko, word, dir, pool);
+    var val = function (x) { return ko2ja ? x.ja : x.ko; };
+
+    var words = padWords([word].concat(src), word, pool);
+    // 回答後に「選ばなかった選択肢が何だったか」を出せるように、選択肢ごとの対訳を残す
+    var info = {};
+    words.forEach(function (x) {
+      info[val(x)] = (ko2ja ? x.ko : x.ja) + '（' + posLabel(x) + '）';
+    });
 
     return {
       kind: 'mc', word: word,
       title: ko2ja ? '意味を選ぼう' : '韓国語を選ぼう',
       word_main: ko2ja ? word.ko : word.ja,
       word_sub: typeTag, tag: null,
-      answer: ko2ja ? word.ja : word.ko,
-      choices: shuffle(choices),
+      answer: val(word),
+      choices: shuffle(words.map(val)),
+      choiceInfo: info,
+      seek: seekOf(word, opts),
       explain: withExample(word.ko + ' ＝ ' + word.ja + '（' + typeTag + '）', word, opts),
       small: ko2ja
     };
@@ -197,23 +218,31 @@
       answer: correct,
       explain: withExample(KO.explain(word, form.key), word, opts)
     };
+    base.seek = seekOf(word, opts);
     var kind = kindHint || (Math.random() < 0.55 ? 'mc' : 'bank');
+    var dis = conjDistractors(word, form.key, correct);
     if (kind === 'mc') {
-      var ds = shuffle(conjDistractors(word, form.key, correct)).slice(0, 3);
+      var ds = shuffle(dis).slice(0, 3);
       // 予備：他の単語の同じ活用形（辞書全体から借りる。試行上限つき）
       var cands = PREDS.filter(function (x) { return x.type === word.type && x.ko !== word.ko; });
       for (var tries = 0; ds.length < 3 && tries < 40; tries++) {
         try {
-          var v = KO.conjugate(pick(cands), form.key);
-          if (v && ds.indexOf(v) < 0 && v !== correct) ds.push(v);
+          var o = pick(cands), v = KO.conjugate(o, form.key);
+          if (v && v !== correct && !ds.some(function (d) { return d.s === v; })) {
+            ds.push({ s: v, note: o.ko + '（' + o.ja + '）の' + form.label });
+          }
         } catch (e) { }
       }
+      var info = {};
+      info[correct] = word.ko + '（' + word.ja + '）の' + form.label;
+      ds.forEach(function (d) { info[d.s] = d.note; });
       base.kind = 'mc';
-      base.choices = shuffle([correct].concat(ds));
+      base.choices = shuffle([correct].concat(ds.map(function (d) { return d.s; })));
+      base.choiceInfo = info;
       return base;
     }
     base.kind = 'bank';
-    base.tiles = makeTiles(correct, conjDistractors(word, form.key, correct));
+    base.tiles = makeTiles(correct, dis.map(function (d) { return d.s; }));
     return base;
   }
 
@@ -236,10 +265,14 @@
     var label = function (w, f) { return w.ja + '／' + f.label; };
     var correct = label(word, form);
 
-    var wrong = [];
+    var wrong = [], info = {};
+    info[correct] = shown;
     shuffle(KO.formsFor(word)).forEach(function (f) {
       if (f.key === form.key || wrong.length >= 2) return;
-      try { if (KO.conjugate(word, f.key) !== shown) wrong.push(label(word, f)); } catch (e) { }
+      try {
+        var v = KO.conjugate(word, f.key);
+        if (v !== shown) { wrong.push(label(word, f)); info[label(word, f)] = v; }
+      } catch (e) { }
     });
     var poolPreds = (opts.preds && opts.preds.length > 3 ? opts.preds : PREDS).filter(function (x) {
       if (x.type !== word.type || x.ko === word.ko || x.ja === word.ja) return false;
@@ -249,13 +282,19 @@
     while (wrong.length < 3 && poolPreds.length) {
       var o = poolPreds.splice(Math.floor(Math.random() * poolPreds.length), 1)[0];
       var l = label(o, form);
-      if (wrong.indexOf(l) < 0 && l !== correct) wrong.push(l);
+      if (wrong.indexOf(l) < 0 && l !== correct) {
+        wrong.push(l);
+        try { info[l] = KO.conjugate(o, form.key); } catch (e) { }
+      }
     }
     shuffle(KO.FORMS).forEach(function (f) {
       if (wrong.length >= 3 || f.types.indexOf(word.type) < 0) return;
       var l2 = label(word, f);
       if (l2 === correct || wrong.indexOf(l2) >= 0) return;
-      try { if (KO.conjugate(word, f.key) !== shown) wrong.push(l2); } catch (e) { }
+      try {
+        var v2 = KO.conjugate(word, f.key);
+        if (v2 !== shown) { wrong.push(l2); info[l2] = v2; }
+      } catch (e) { }
     });
 
     return {
@@ -266,6 +305,8 @@
       tag: null,
       answer: correct,
       choices: shuffle([correct].concat(wrong.slice(0, 3))),
+      choiceInfo: info,
+      seek: seekOf(word, opts),
       explain: withExample(KO.explain(word, form.key), word, opts)
     };
   }
@@ -286,6 +327,7 @@
       speakTarget: word.ko,
       answer: word.ko,
       tiles: makeTiles(word.ko, others),
+      seek: seekOf(word, opts),
       explain: withExample(word.ko + ' ＝ ' + word.ja + '（' + typeTag + '）', word, opts)
     };
   }
@@ -345,6 +387,7 @@
     COURSES: COURSES, BASIC_FORMS: BASIC_FORMS, posLabel: posLabel,
     shuffle: shuffle, pick: pick, norm: norm, syllables: syllables,
     formsForWord: formsForWord, conjDistractors: conjDistractors, makeTiles: makeTiles,
+    seekOf: seekOf, padWords: padWords,
     meaningQuestion: meaningQuestion, conjQuestion: conjQuestion,
     conjMeaningQuestion: conjMeaningQuestion, listenQuestion: listenQuestion,
     buildQueue: buildQueue

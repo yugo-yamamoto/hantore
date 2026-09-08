@@ -97,7 +97,8 @@
 
   function renderInfo() {
     var c = ST.caps, s = c.captions;
-    $('v-title').textContent = c.source.title;
+    $('v-title').innerHTML = '<a href="' + esc(c.source.url || ('https://www.youtube.com/watch?v=' + c.id)) +
+      '" target="_blank" rel="noopener">' + esc(c.source.title) + ' ▶</a>';
     $('v-meta').textContent = [c.source.channel, fmtDur(c.source.durationSec),
       c.id].filter(Boolean).join('　・　');
     $('v-badges').innerHTML =
@@ -227,10 +228,12 @@
       (d.type === 'noun' ? nouns : (d.type === 'other' ? others : preds)).push(d);
       meta[d.ko] = {
         forms: w.forms,
+        at: w.at || [],
         ex: (w.ex || []).map(function (i) { return (ST.caps.lines || [])[i]; }).filter(Boolean)
       };
     });
-    return { nouns: nouns, preds: preds, others: others, meta: meta, scope: 'basic' };
+    return { nouns: nouns, preds: preds, others: others, meta: meta,
+             videoId: ST.caps && ST.caps.id, scope: 'basic' };
   }
   var BY_KO = {};
   DATA.NOUNS.concat(DATA.PREDS, DATA.OTHERS || []).forEach(function (w) { BY_KO[w.ko] = w; });
@@ -281,7 +284,7 @@
       words: ST.words.map(function (w) {
         return {
           ko: w.ko, count: w.count, surfaces: w.surfaces, forms: w.forms,
-          ex: w.ex, include: !!w.include, needsCheck: !!w.needsCheck
+          ex: w.ex, at: w.at || [], include: !!w.include, needsCheck: !!w.needsCheck
         };
       }),
       unknown: ST.unknown.slice(0, 200)
@@ -379,7 +382,7 @@
             return {
               ko: w.ko, ja: dic.ja || '?', type: dic.type || 'noun', cat: dic.cat, pos: dic.pos || null,
               weak: !!dic.weak, count: w.count || 0, surfaces: w.surfaces || {}, forms: w.forms || {},
-              exts: {}, ex: w.ex || [], certain: true, ambiguous: false,
+              exts: {}, ex: w.ex || [], at: w.at || [], certain: true, ambiguous: false,
               needsCheck: !!w.needsCheck, include: w.include !== false
             };
           });

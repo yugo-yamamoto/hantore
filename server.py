@@ -224,6 +224,12 @@ def hangul_ratio(lines):
     return (hangul / total) if total else 0.0
 
 
+class Server(ThreadingHTTPServer):
+    daemon_threads = True
+    request_queue_size = 128       # 既定の5だと並列リクエストで接続が溢れる
+    allow_reuse_address = True
+
+
 class UserError(Exception):
     """利用者に見せるエラー（スタックトレースを出さない）"""
 
@@ -300,11 +306,21 @@ def lines_path(vid):
     return os.path.join(LINES, vid + ".json")
 
 
+def write_json(path, obj):
+    """同じファイルをブラウザが読んでいる最中に壊さないよう、原子的に書き換える"""
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(obj, f, ensure_ascii=False, indent=1)
+        f.flush()
+        os.fsync(f.fileno())
+    os.replace(tmp, path)
+
+
 def rebuild_index():
     os.makedirs(DECKS, exist_ok=True)
     items = []
     for name in sorted(os.listdir(DECKS)):
-        if not name.endswith(".json") or name == "index.json":
+        if not name.endswith(".json") or name in ("index.json",) or name.endswith(".tmp"):
             continue
         try:
             with open(os.path.join(DECKS, name), encoding="utf-8") as f:
@@ -321,8 +337,7 @@ def rebuild_index():
         except (OSError, ValueError):
             continue
     items.sort(key=lambda x: x["generatedAt"], reverse=True)
-    with open(os.path.join(DECKS, "index.json"), "w", encoding="utf-8") as f:
-        json.dump(items, f, ensure_ascii=False, indent=1)
+    write_json(os.path.join(DECKS, "index.json"), items)
     return items
 
 
@@ -330,6 +345,8 @@ def rebuild_index():
 # HTTP
 # ============================================================
 class Handler(SimpleHTTPRequestHandler):
+    # HTTP/1.0 のまま（keep-alive にすると SSE の扱いが面倒になる）。
+    # 1ページで十数本の接続が同時に来るので、取りこぼしは接続キューの拡大で防ぐ。
     def __init__(self, *a, **kw):
         super().__init__(*a, directory=ROOT, **kw)
 
@@ -415,12 +432,10 @@ class Handler(SimpleHTTPRequestHandler):
             lines = deck.pop("lines", None)
             has_lines = bool(lines) or os.path.exists(lines_path(deck["id"]))
             deck["linesFile"] = ("lines/" + deck["id"] + ".json") if has_lines else None
-            with open(deck_path(deck["id"]), "w", encoding="utf-8") as f:
-                json.dump(deck, f, ensure_ascii=False, indent=1)
+            write_json(deck_path(deck["id"]), deck)
             if lines:
                 os.makedirs(LINES, exist_ok=True)
-                with open(lines_path(deck["id"]), "w", encoding="utf-8") as f:
-                    json.dump({"id": deck["id"], "lines": lines}, f, ensure_ascii=False)
+                write_json(lines_path(deck["id"]), {"id": deck["id"], "lines": lines})
             index = rebuild_index()
             sys.stderr.write("  [deck] 保存: %s（%d語 / 字幕%d行）\n"
                              % (deck["id"], len(deck.get("words") or []), len(lines or [])))
@@ -450,7 +465,7 @@ def main():
     os.makedirs(CACHE, exist_ok=True)
     os.makedirs(LINES, exist_ok=True)
     rebuild_index()
-    srv = ThreadingHTTPServer((args.host, args.port), Handler)
+    srv = Server((args.host, args.port), Handler)
     print("한토레 サーバー起動")
     print("  学習アプリ : http://localhost:%d/index.html" % args.port)
     print("  管理画面   : http://localhost:%d/admin.html" % args.port)

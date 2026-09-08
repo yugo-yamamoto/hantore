@@ -52,7 +52,11 @@
   function pool(id) {
     var d = decks[id];
     if (!d) return null;
-    var out = { id: id, title: (d.source || {}).title || id, nouns: [], preds: [], others: [], meta: {} };
+    var out = {
+      id: id, title: (d.source || {}).title || id,
+      videoId: d.id, url: (d.source || {}).url || ('https://www.youtube.com/watch?v=' + d.id),
+      nouns: [], preds: [], others: [], meta: {}
+    };
     var lines = d.lines || [];
     (d.words || []).forEach(function (e) {
       if (e.include === false) return;
@@ -63,6 +67,7 @@
         count: e.count || 0,
         forms: e.forms || {},
         surfaces: e.surfaces || {},
+        at: e.at || [],                                   // 動画のその位置（ミリ秒）
         ex: (e.ex || []).map(function (i) { return lines[i]; }).filter(Boolean)
       };
     });

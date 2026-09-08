@@ -204,7 +204,7 @@
           words.set(w.ko, (e = {
             ko: w.ko, type: w.type, ja: w.ja, cat: w.cat, pos: w.pos || null,
             weak: !!w.weak,
-            count: 0, surfaces: {}, forms: {}, exts: {}, ex: [],
+            count: 0, surfaces: {}, forms: {}, exts: {}, ex: [], at: [],
             certain: false, ambiguous: false
           }));
         }
@@ -214,7 +214,10 @@
         else if (hit.kind === 'noun' || hit.kind === 'other') { e.certain = true; }
         else { e.exts[hit.label] = (e.exts[hit.label] || 0) + 1; }
         if (hit.ambiguous) e.ambiguous = true;
-        if (e.ex.length < 3 && e.ex.indexOf(line.i) < 0) e.ex.push(line.i);
+        if (e.ex.length < 3 && e.ex.indexOf(line.i) < 0) {
+          e.ex.push(line.i);
+          e.at.push(line.t || 0);      // 動画のその位置へ飛ぶためのミリ秒。字幕本文が無くても使える
+        }
       });
     });
 
