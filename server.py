@@ -1,8 +1,6 @@
 # /// script
 # requires-python = ">=3.10"
-# dependencies = [
-#   "yt-dlp>=2024.1.1",
-# ]
+# dependencies = []
 # ///
 """
 한토레 ローカルサーバー
@@ -11,7 +9,10 @@
 
 役割は2つだけ:
   1. 静的配信（学習アプリ index.html / 管理画面 admin.html）
-  2. 字幕取得API（yt-dlp で YouTube から韓国語字幕＋日本語訳字幕を取得して正規化）
+  2. 字幕取得API（YouTube の内部API から韓国語字幕＋日本語訳字幕を取得して正規化）
+
+字幕は YouTube の内部API（InnerTube）を直接叩いて取得する。標準ライブラリだけで動き、
+外部依存は無い。取得できなくなったときは CLIENTS の定義を更新する（下のコメント参照）。
 
 単語の抽出・既知語の同定・問題の生成はすべてブラウザ側（js/extract.js）で行う。
 活用エンジン（js/hangul.js）と辞書（js/data.js）を Python に二重実装しないため。
@@ -33,6 +34,26 @@ DECKS = os.path.join(ROOT, "decks")
 CACHE = os.path.join(DECKS, ".cache")
 LINES = os.path.join(DECKS, "lines")   # 字幕本文だけを置く場所（公開リポジトリには含めない）
 
+# InnerTube のクライアント定義。上から順に試し、字幕トラックが取れたものを使う。
+#   値の出典は yt-dlp の extractor/youtube/_base.py の INNERTUBE_CLIENTS。
+#   YouTube に塞がれて取得できなくなったら、最新の yt-dlp のその定義を見てここを更新する。
+#   （実測: WEB / MWEB は UNPLAYABLE、ANDROID_VR は LOGIN_REQUIRED、IOS だけが通る。2026-09 時点）
+IOS_DEVICE = {"deviceMake": "Apple", "deviceModel": "iPhone16,2",
+              "osName": "iPhone", "osVersion": "18.3.2.22D82"}
+CLIENTS = [
+    {"name": "IOS", "version": "21.26.4", "id": 5, "extra": IOS_DEVICE,
+     "ua": "com.google.ios.youtube/21.26.4 (iPhone16,2; U; CPU iOS 18_3_2 like Mac OS X;)"},
+    {"name": "IOS", "version": "20.10.4", "id": 5, "extra": IOS_DEVICE,
+     "ua": "com.google.ios.youtube/20.10.4 (iPhone16,2; U; CPU iOS 18_3_2 like Mac OS X)"},
+    {"name": "MWEB", "version": "2.20250101.00.00", "id": 2, "extra": {},
+     "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_3 like Mac OS X) AppleWebKit/605.1.15 "
+           "(KHTML, like Gecko) Version/18.3 Mobile/15E148 Safari/604.1"},
+    {"name": "WEB", "version": "2.20250101.00.00", "id": 1, "extra": {},
+     "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+           "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"},
+]
+INNERTUBE_URL = "https://www.youtube.com/youtubei/v1/player?prettyPrint=false"
+
 MAX_LINES = 1200          # これを超えたら等間隔サンプリング
 MIN_HANGUL_RATIO = 0.3    # ハングル文字率がこれ未満なら韓国語動画ではないと判断
 ALIGN_TOLERANCE_MS = 700  # ko/ja のセグメント数が違うときの時刻マッチ許容幅
@@ -49,55 +70,116 @@ def video_id_of(url):
     return m.group(1) if m else None
 
 
-def fetch_info(url, log):
-    from yt_dlp import YoutubeDL, version as ytdlp_version
-
-    log("yt-dlp %s で動画情報を取得中…" % ytdlp_version.__version__)
-    opts = {"skip_download": True, "quiet": True, "no_warnings": True, "noprogress": True}
-    with YoutubeDL(opts) as ydl:
-        info = ydl.extract_info(url, download=False)
-    if info.get("_type") == "playlist":
-        raise UserError("プレイリストではなく単一の動画のURLを指定してください")
-    return info, ytdlp_version.__version__
+def http_request(url, data=None, headers=None, timeout=30):
+    """外向きの HTTP はすべてここを通す（将来 TLS 偽装が必要になったらこの関数だけ差し替える）"""
+    req = urllib.request.Request(url, data=data, headers=headers or {})
+    r = urllib.request.urlopen(req, timeout=timeout)
+    return r.status, r.read()
 
 
-def pick_track(info):
-    """(韓国語トラック名, 韓国語URL, 手動字幕か, 日本語トラック名, 日本語URL)"""
-    subs = info.get("subtitles") or {}
-    auto = info.get("automatic_captions") or {}
+def innertube_player(vid, log):
+    """InnerTube の player を叩いて、字幕トラックの入った応答を得る。
 
-    def json3(entry):
-        for f in entry or []:
-            if f.get("ext") == "json3":
-                return f.get("url")
+    クライアント候補を上から順に試す。全部だめなら、どれがどう落ちたかを添えて失敗する。
+    """
+    tried, statuses = [], []
+    for c in CLIENTS:
+        ctx = {"clientName": c["name"], "clientVersion": c["version"], "hl": "ko"}
+        ctx.update(c["extra"])
+        body = json.dumps({"videoId": vid, "context": {"client": ctx},
+                           "contentCheckOk": True, "racyCheckOk": True}).encode("utf-8")
+        headers = {"Content-Type": "application/json", "User-Agent": c["ua"],
+                   "X-YouTube-Client-Name": str(c["id"]), "X-YouTube-Client-Version": c["version"]}
+        label = "%s/%s" % (c["name"], c["version"])
+        t0 = time.time()
+        try:
+            status, raw = http_request(INNERTUBE_URL, body, headers)
+            pr = json.loads(raw.decode("utf-8", "replace"))
+        except (urllib.error.URLError, TimeoutError, ValueError) as e:
+            tried.append("%s: %s" % (label, e))
+            log("クライアント %s は失敗（%s）" % (label, e))
+            continue
+        st = (pr.get("playabilityStatus") or {}).get("status")
+        tracks = (((pr.get("captions") or {}).get("playerCaptionsTracklistRenderer") or {})
+                  .get("captionTracks") or [])
+        got = (pr.get("videoDetails") or {}).get("videoId")
+        if st == "OK" and got == vid and tracks:
+            log("動画情報を取得（%s / %.2f秒 / 字幕 %d トラック）" % (label, time.time() - t0, len(tracks)))
+            return pr, label
+        why = st if st != "OK" else ("動画IDが不一致" if got != vid else "字幕トラックなし")
+        reason = (pr.get("playabilityStatus") or {}).get("reason") or ""
+        statuses.append(st)
+        tried.append("%s: %s %s" % (label, why, reason))
+        log("クライアント %s は使えません（%s %s）" % (label, why, reason))
+
+    # どのクライアントでも同じ「見られない」なら、原因はこちらではなく動画側
+    if statuses and all(st in ("ERROR", "UNPLAYABLE", "LOGIN_REQUIRED") for st in statuses):
+        raise UserError("この動画は再生できません（削除済み・非公開・年齢制限・地域制限など）。"
+                        "YouTube の応答: %s" % (tried[0].split(": ", 1)[-1] or "-"))
+    raise UserError("YouTube から字幕情報を取得できませんでした（%s）。"
+                    "YouTube 側の仕様変更の可能性があります。server.py の CLIENTS の定義を"
+                    "最新の yt-dlp（extractor/youtube/_base.py の INNERTUBE_CLIENTS）に合わせて更新してください"
+                    % " / ".join(tried[:4]))
+
+
+def caption_url(base_url, tlang=None):
+    """字幕URLを json3 形式に整える。xosf は json3 に不要な位置情報が入るので外す"""
+    u = urllib.parse.urlsplit(base_url)
+    q = [(k, v) for k, v in urllib.parse.parse_qsl(u.query) if k not in ("fmt", "xosf", "tlang")]
+    q.append(("fmt", "json3"))
+    if tlang:
+        q.append(("tlang", tlang))
+    return urllib.parse.urlunsplit((u.scheme, u.netloc, u.path, urllib.parse.urlencode(q), ""))
+
+
+def needs_pot(base_url):
+    """PO トークンが要る実験（exp=xpe / xpv）に当たっていないか。当たっていると本文が空で返る"""
+    q = urllib.parse.parse_qs(urllib.parse.urlsplit(base_url).query)
+    return any(e in q.get("exp", []) for e in ("xpe", "xpv"))
+
+
+def pick_track(player):
+    """(韓国語トラック名, 韓国語URL, 手動字幕か, (日本語トラック名, 日本語URL))"""
+    tracks = (((player.get("captions") or {}).get("playerCaptionsTracklistRenderer") or {})
+              .get("captionTracks") or [])
+    langs = [t.get("languageCode") for t in tracks]
+
+    def ko_of(asr):
+        for t in tracks:
+            if not (t.get("languageCode") or "").startswith("ko"):
+                continue
+            if (t.get("kind") == "asr") == asr:
+                return t
         return None
 
-    # 手動の韓国語字幕を最優先（音声認識の誤りがない）
-    for key in ("ko", "ko-KR"):
-        if json3(subs.get(key)):
-            return key, json3(subs[key]), True, _ja(auto, subs)
-    for key in ("ko-orig", "ko", "ko-KR"):
-        if json3(auto.get(key)):
-            return key, json3(auto[key]), False, _ja(auto, subs)
+    ko = ko_of(False)                      # 手動の韓国語字幕を最優先（音声認識の誤りがない）
+    manual = ko is not None
+    if not ko:
+        ko = ko_of(True)
+    if not ko:
+        if not tracks:
+            raise UserError("この動画には字幕（手動・自動とも）がありません")
+        raise UserError("韓国語字幕が無いため対象外です（ある字幕: %s）"
+                        % ", ".join(sorted(set(filter(None, langs)))[:12]))
+    if needs_pot(ko["baseUrl"]):
+        raise UserError("この字幕URLは YouTube の実験（exp=xpe）の対象で本文を取得できません。"
+                        "server.py の CLIENTS の定義を更新してください")
 
-    if not subs and not auto:
-        raise UserError("この動画には字幕（手動・自動とも）がありません")
-    raise UserError("韓国語字幕が無いため対象外です（ある字幕: %s）"
-                    % ", ".join(sorted(set(list(subs) + list(auto)))[:12]))
+    ko_key = "ko" if manual else "ko-orig"   # 既存デッキの koTrack と同じ表記にそろえる
+    return ko_key, caption_url(ko["baseUrl"]), manual, _ja(tracks, ko)
 
 
-def _ja(auto, subs):
-    def json3(entry):
-        for f in entry or []:
-            if f.get("ext") == "json3":
-                return f.get("url")
-        return None
-    for src in (subs, auto):
-        for key in ("ja", "ja-JP"):
-            u = json3(src.get(key))
-            if u:
-                return key, u
-    return None, None
+def _ja(tracks, ko_track):
+    """日本語訳。本物の日本語字幕があればそれを、無ければ韓国語トラックの機械翻訳を使う。
+
+    翻訳できるかは translationLanguages を見ない（IOS クライアントでは常に空で返るため）。
+    """
+    for t in tracks:
+        if (t.get("languageCode") or "").startswith("ja"):
+            return "ja", caption_url(t["baseUrl"])
+    if ko_track.get("isTranslatable") is False:
+        return None, None
+    return "ja", caption_url(ko_track["baseUrl"], tlang="ja")
 
 
 def download_json3(url, cache_path, log, refresh=False):
@@ -111,24 +193,32 @@ def download_json3(url, cache_path, log, refresh=False):
         except (OSError, ValueError):
             pass
 
-    req = urllib.request.Request(url, headers={
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/131.0 Safari/537.36",
-        "Accept-Language": "ko,ja;q=0.9,en;q=0.8",
-    })
+    headers = {"User-Agent": CLIENTS[0]["ua"], "Accept-Language": "ko,ja;q=0.9,en;q=0.8"}
     last = None
     for attempt, wait in enumerate(((0, 3, 8, 15)), start=1):
         if wait:
             log("字幕の取得に失敗したので %d 秒待って再試行します（%d/4）" % (wait, attempt))
             time.sleep(wait)
         try:
-            raw = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
+            status, body = http_request(url, headers=headers)
+            if not body:
+                # 200 なのに空 ＝ PO トークンが要る実験に当たっている。再試行しても無駄
+                raise UserError("YouTube が空の字幕を返しました。"
+                                "server.py の CLIENTS の定義を更新してください")
+            raw = body.decode("utf-8", "replace")
+            try:
+                j = json.loads(raw)
+            except ValueError:
+                raise UserError("字幕の形式が想定と違います（YouTube 側の仕様変更の可能性）")
             try:
                 os.makedirs(os.path.dirname(cache_path), exist_ok=True)
-                with open(cache_path, "w", encoding="utf-8") as f:
+                tmp = cache_path + ".tmp"
+                with open(tmp, "w", encoding="utf-8") as f:
                     f.write(raw)
+                os.replace(tmp, cache_path)          # 読み取り中のファイルを壊さない
             except OSError as e:
                 log("キャッシュの保存に失敗（続行します）: %s" % e)
-            return json.loads(raw)
+            return j
         except urllib.error.HTTPError as e:
             last = e
             if e.code not in (429, 500, 502, 503):
@@ -239,10 +329,11 @@ def analyze(url, log, refresh=False):
     if not vid:
         raise UserError("YouTube の動画URLではないようです: %s" % url)
 
-    info, ytdlp_ver = fetch_info(url, log)
-    log("動画: %s（%s）" % (info.get("title"), info.get("uploader") or "-"))
+    player, client = innertube_player(vid, log)
+    vd = player.get("videoDetails") or {}
+    log("動画: %s（%s）" % (vd.get("title"), vd.get("author") or "-"))
 
-    ko_track, ko_url, manual, (ja_track, ja_url) = pick_track(info)
+    ko_track, ko_url, manual, (ja_track, ja_url) = pick_track(player)
     log("韓国語字幕: %s%s" % (ko_track, "（手動字幕・高品質）" if manual else "（自動字幕）"))
     log("日本語訳字幕: %s" % (ja_track or "なし"))
 
@@ -252,7 +343,7 @@ def analyze(url, log, refresh=False):
         # 日本語訳字幕は「あれば使う」。取れなくても韓国語だけで続行する
         try:
             ja_events = events_of(download_json3(ja_url, os.path.join(CACHE, vid + ".ja.json3"), log, refresh))
-        except UserError as e:
+        except (UserError, ValueError) as e:
             log("日本語訳字幕は取得できませんでした（%s）。韓国語のみで続行します" % e)
             ja_track = None
     log("取得したセグメント: ko %d / ja %d" % (len(ko_events), len(ja_events)))
@@ -272,16 +363,17 @@ def analyze(url, log, refresh=False):
         "id": vid,
         "source": {
             "url": "https://www.youtube.com/watch?v=" + vid,
-            "title": info.get("title") or vid,
-            "channel": info.get("uploader") or "",
-            "durationSec": int(info.get("duration") or 0),
-            "uploadDate": info.get("upload_date") or "",
+            "title": vd.get("title") or vid,
+            "channel": vd.get("author") or "",
+            "durationSec": int(vd.get("lengthSeconds") or 0),
+            "uploadDate": "",          # InnerTube の応答には入っていない（UI では未使用）
         },
         "captions": {
             "koTrack": ko_track, "jaTrack": ja_track or "", "manual": manual,
             "aligned": aligned, "lines": len(lines), "hangulRatio": round(ratio, 3),
         },
-        "generated": {"at": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "ytdlp": ytdlp_ver},
+        "generated": {"at": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+                      "fetcher": "innertube", "client": client},
         "lines": lines,
     }
 
@@ -414,10 +506,11 @@ class Handler(SimpleHTTPRequestHandler):
             emit("result", analyze(url, log, refresh))
         except UserError as e:
             emit("error", {"msg": str(e)})
-        except Exception as e:                                   # yt-dlp の失敗など
+        except Exception as e:                                   # 想定外の失敗
             sys.stderr.write("  [subs] %r\n" % (e,))
             emit("error", {"msg": "取得に失敗しました: %s" % e,
-                           "hint": "yt-dlp を更新してみてください: uv run --with 'yt-dlp@latest' server.py"})
+                           "hint": "YouTube 側の仕様変更かもしれません。server.py の CLIENTS の定義を"
+                                   "最新の yt-dlp（extractor/youtube/_base.py）に合わせて更新してください"})
 
     # ---------- デッキ保存・削除 ----------
     def do_PUT(self):

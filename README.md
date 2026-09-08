@@ -7,7 +7,7 @@ YouTube の字幕からも問題を作れる。
 ## 起動
 
 ```bash
-uv run server.py                # 静的配信 + 字幕取得API（初回は依存の解決に少し時間がかかる）
+uv run server.py                # 静的配信 + 字幕取得API（外部依存なし。python3 server.py でも動く）
 powershell.exe -NoProfile -Command "Start-Process 'http://localhost:8080/index.html'"
 ```
 
@@ -22,7 +22,7 @@ powershell.exe -NoProfile -Command "Start-Process 'http://localhost:8080/index.h
 | --- | --- |
 | `index.html` | 学習アプリの画面（ホーム／レッスン／結果／活用表） |
 | `admin.html` | 問題作成管理画面（YouTube URL → 字幕 → 単語 → 問題 → 保存） |
-| `server.py` | 静的配信と `/api/subtitles`（yt-dlp・SSE）、`/api/decks` の CRUD |
+| `server.py` | 静的配信と `/api/subtitles`（YouTube 内部API・SSE）、`/api/decks` の CRUD。標準ライブラリのみ |
 | `css/style.css` | Duolingo 風スタイル |
 | `css/admin.css` | 管理画面のスタイル |
 | `js/hangul.js` | ハングルの分解・合成と活用エンジン（14形・不規則対応） |
@@ -60,7 +60,7 @@ powershell.exe -NoProfile -Command "Start-Process 'http://localhost:8080/index.h
 `admin.html` で YouTube の URL を指定すると、字幕から単語を抽出してレッスンを作れる。
 
 1. URL を貼って **字幕を取得**
-   `yt-dlp` で韓国語字幕（手動字幕があれば優先）と YouTube の日本語自動翻訳字幕を取得し、
+   YouTube の内部API（InnerTube）から韓国語字幕（手動字幕があれば優先）と日本語自動翻訳字幕を取得し、
    ノイズ（`[음악]` など）と自動字幕のローリング重複を除いて正規化する。取得した生字幕は
    `decks/.cache/` に残るので、作り直しのときは再取得しない（YouTube の 429 対策）。
 2. **既存辞書の語だけを同定**
@@ -130,14 +130,28 @@ powershell.exe -NoProfile -Command "Start-Process 'http://localhost:8080/index.h
 | `decks/<動画ID>.json` | 語彙データ（どの単語が何回・どの活用形で・動画の何秒の位置に出たか、辞書外の語、動画のメタ情報） | **する** |
 | `decks/index.json` | デッキ一覧 | **する** |
 | `decks/lines/<動画ID>.json` | 字幕の本文（韓国語＋日本語訳） | しない |
-| `decks/.cache/<動画ID>.{ko,ja}.json3` | yt-dlp で取得した生の字幕 | しない |
+| `decks/.cache/<動画ID>.{ko,ja}.json3` | 取得した生の字幕 | しない |
 
 字幕の本文は動画制作者の著作物なので `.gitignore` で除外している。
 **語彙データだけでレッスンは成立する**（`decks/lines/` が無いと、解説に出る字幕の例文が省かれるだけ）。
 クローンした人はそのまま既存デッキで練習でき、自分で動画を指定して新しいデッキも作れる。
 
-字幕の取得は `yt-dlp` を使った非公式の経路で、**個人の学習用**を前提にしている。
-取得した字幕本文を再配布しないこと。
+### 字幕の取得について
+
+字幕は YouTube の内部API（InnerTube）を直接叩いて取得している（`POST /youtubei/v1/player` →
+返ってきた字幕URLに `fmt=json3`、日本語訳は `tlang=ja` を付ける）。Python の標準ライブラリだけで動き、
+**外部依存はゼロ**。1動画あたりのリクエストは3本（動画情報1・字幕2）で、取得済みの字幕は
+`decks/.cache/` に残して再取得しない。
+
+- 使うクライアント定義は `server.py` の `CLIENTS` にまとめてある。上から順に試し、
+  字幕トラックが取れたものを使う（2026-09 時点で通るのは iOS クライアントのみ）。
+- **取得できなくなったら `CLIENTS` を更新する**。値の出典は yt-dlp の
+  `extractor/youtube/_base.py` の `INNERTUBE_CLIENTS`。管理画面のログに
+  「どのクライアントがどの状態で落ちたか」が出るので、原因の切り分けはそこから。
+- 字幕URLに `exp=xpe` が付いている場合は本文が空で返る（PO トークンが必要な実験）。
+  これは本文を取得する前に検知してエラーにしている。
+
+非公式の経路なので、**個人の学習用**を前提にしている。取得した字幕本文を再配布しないこと。
 
 ## 操作
 
