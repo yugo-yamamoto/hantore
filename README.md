@@ -118,7 +118,7 @@ powershell.exe -NoProfile -Command "Start-Process 'http://localhost:8080/index.h
 日本語だけの箇所には付かない。
 
 - ホームの「音声」で ON/OFF・速度（ゆっくり／ふつう／速め）・問題の自動読み上げを設定
-- 音声は Web Speech API の `ko-KR`（Windows なら Edge / Chrome の韓国語音声を自動選択）
+- 音声は Web Speech API の `ko-KR`（端末にある韓国語の音声を自動で選ぶ）
 - 韓国語音声が無い環境では既定音声で発話し、未対応ブラウザでは 🔊 を自動的に隠す
 
 ## デッキのファイル構成
