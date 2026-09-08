@@ -559,10 +559,11 @@ def main():
     os.makedirs(LINES, exist_ok=True)
     rebuild_index()
     srv = Server((args.host, args.port), Handler)
-    print("한토레 サーバー起動")
-    print("  学習アプリ : http://localhost:%d/index.html" % args.port)
-    print("  管理画面   : http://localhost:%d/admin.html" % args.port)
-    print("  停止: Ctrl+C")
+    host = "localhost" if args.host in ("127.0.0.1", "0.0.0.0") else args.host
+    print("한토레 サーバーを起動しました。下のURLをブラウザで開いてください。\n")
+    print("  問題作成管理画面  http://%s:%d/admin.html   ← YouTube から問題を作る" % (host, args.port))
+    print("  学習アプリ        http://%s:%d/index.html   ← 作ったデッキを手元で確認する" % (host, args.port))
+    print("\n  停止: Ctrl+C", flush=True)   # パイプに流しても即座に出るように
     try:
         srv.serve_forever()
     except KeyboardInterrupt:

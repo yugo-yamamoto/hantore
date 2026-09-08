@@ -4,17 +4,14 @@ Duolingo 風 UI の韓国語単語練習アプリ（HTML/CSS/JS のみ、ビル�
 基本語彙 約1,280語（名詞 790／動詞 232／形容詞 128／副詞・代名詞など 130）を収録し、
 YouTube の字幕からも問題を作れる。
 
-## 起動
+## 使う
 
-```bash
-uv run server.py                # 静的配信 + 字幕取得API（外部依存なし。python3 server.py でも動く）
-powershell.exe -NoProfile -Command "Start-Process 'http://localhost:8080/index.html'"
-```
+**<https://yugo-yamamoto.github.io/hantore/>** … インストール不要。ブラウザで開けばそのまま練習できる。
 
-- 学習アプリ: <http://localhost:8080/index.html>
-- 問題作成管理画面: <http://localhost:8080/admin.html>
+収録済みのデッキ（動画から作った単語セット）もここに含まれているので、何も用意しなくても
+辞書1,280語のコースと動画由来のコースの両方が使える。
 
-字幕取得を使わないなら `python3 -m http.server 8080` でも学習アプリは動く（保存済みデッキも読める）。
+自分で動画から問題を作りたいときだけ、手元でサーバーを起動する（→ [動画から問題を作る](#動画から問題を作る問題作成管理画面)）。
 
 ## 構成
 
@@ -57,7 +54,18 @@ powershell.exe -NoProfile -Command "Start-Process 'http://localhost:8080/index.h
 
 ## 動画から問題を作る（問題作成管理画面）
 
-`admin.html` で YouTube の URL を指定すると、字幕から単語を抽出してレッスンを作れる。
+問題作成は手元のサーバーで行う（字幕の取得に通信が要るため、公開サイトからはできない）。
+
+```bash
+git clone https://github.com/yugo-yamamoto/hantore.git
+cd hantore
+uv run server.py          # 外部依存なし。python3 server.py でも動く
+```
+
+起動すると学習アプリと管理画面のURLが標準出力に出るので、それをブラウザで開く。
+ポートを変えたいときは `--port 9000`。
+
+管理画面で YouTube の URL を指定すると、字幕から単語を抽出してレッスンを作れる。
 
 1. URL を貼って **字幕を取得**
    YouTube の内部API（InnerTube）から韓国語字幕（手動字幕があれば優先）と日本語自動翻訳字幕を取得し、
@@ -78,6 +86,10 @@ powershell.exe -NoProfile -Command "Start-Process 'http://localhost:8080/index.h
 5. 学習アプリのホームに「📺 動画から」としてコースが並ぶ
    名詞 韓→日／日→韓・用言 韓→日／日→韓・活用 韓→日／日→韓・🔊 聞き取り・🎯 ミックス。
    語数が足りないコースはグレーアウトする。
+
+作ったデッキを公開サイト（GitHub Pages）にも出したいときは、`decks/<動画ID>.json` と
+`decks/index.json` をコミットして push すれば、GitHub Actions が自動で反映する。
+字幕の本文（`decks/lines/`）は `.gitignore` で除外されているので公開されない。
 
 デッキは単語のキー（`ko`）しか持たず、訳・品詞・不規則は常に `js/data.js` を正本として引く。
 活用問題は**字幕に実際に出てきた形**を優先して出題する（実測で約8割）。
