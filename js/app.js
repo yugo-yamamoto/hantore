@@ -561,11 +561,6 @@
       $('log-toggle').textContent = $('logpanel').classList.contains('collapsed') ? '▲' : '_';
     });
 
-    // 画面の縦が狭いときはログパネルを畳んで問題を見やすくする
-    if (window.innerHeight < 720) {
-      $('logpanel').classList.add('collapsed');
-      $('log-toggle').textContent = '▲';
-    }
     log('起動しました（名詞 ' + NOUNS.length + '語 / 動詞・形容詞 ' + PREDS.length + '語）');
 
     // 管理画面はローカルサーバー（uv run server.py）専用。
