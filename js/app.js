@@ -318,8 +318,9 @@
         var note = q.choiceInfo && q.choiceInfo[q.choices[i]];
         var box = b.querySelector('.ctext');
         if (note && box && !box.querySelector('.note')) {
+          // note.speak は読み上げるハングルだけ（無い注記は SPEECH.btn が空文字を返す）
           box.insertAdjacentHTML('beforeend',
-            '<span class="note">' + escapeHtml(note) + SPEECH.btn(note, 'sm') + '</span>');
+            '<span class="note">' + escapeHtml(note.text) + SPEECH.btn(note.speak, 'sm') + '</span>');
         }
       });
     } else {

@@ -117,10 +117,11 @@
     if (key === 'aseo')     t(function () { return stem + '어서'; });
     return out;
   }
-  /** 誤答の候補を { s: 表層形, note: それが何なのか } で返す */
+  /** 誤答の候補を { s: 表層形, note: それが何なのか, speak: 読み上げる語 } で返す。
+      speak は注記に含まれるハングル（無ければ null）。機械的に作った誤形は読み上げない */
   function conjDistractors(w, key, correct) {
     var out = [];
-    function add(s, note) { if (s) out.push({ s: s, note: note }); }
+    function add(s, note, speak) { if (s) out.push({ s: s, note: note, speak: speak || null }); }
     if (w.irr) {
       var plain = {}; Object.keys(w).forEach(function (k) { plain[k] = w[k]; }); plain.irr = null;
       try { add(KO.conjugate(plain, key), KO.irrLabel(w) + 'を無視した形（誤り）'); } catch (e) { }
@@ -129,7 +130,7 @@
     endingMistake(w, key, correct).forEach(function (v) { add(v, '語尾の付け方を間違えた形（誤り）'); });
     KO.formsFor(w).forEach(function (fm) {
       if (fm.key === key) return;
-      try { add(fm.fn(w), w.ko + 'の' + fm.label); } catch (e) { }
+      try { add(fm.fn(w), w.ko + 'の' + fm.label, w.ko); } catch (e) { }
     });
     var seen = {};
     return out.filter(function (d) {
@@ -185,10 +186,14 @@
     var val = function (x) { return ko2ja ? x.ja : x.ko; };
 
     var words = padWords([word].concat(src), word, pool);
-    // 回答後に「選ばなかった選択肢が何だったか」を出せるように、選択肢ごとの対訳を残す
+    // 回答後に「選ばなかった選択肢が何だったか」を出せるように、選択肢ごとの対訳を残す。
+    // speak には読み上げるハングルだけを入れる（表示は「영화（名詞）」のように日本語混じりになるため）
     var info = {};
     words.forEach(function (x) {
-      info[val(x)] = (ko2ja ? x.ko : x.ja) + '（' + posLabel(x) + '）';
+      info[val(x)] = {
+        text: (ko2ja ? x.ko : x.ja) + '（' + posLabel(x) + '）',
+        speak: ko2ja ? x.ko : null
+      };
     });
 
     return {
@@ -229,13 +234,13 @@
         try {
           var o = pick(cands), v = KO.conjugate(o, form.key);
           if (v && v !== correct && !ds.some(function (d) { return d.s === v; })) {
-            ds.push({ s: v, note: o.ko + '（' + o.ja + '）の' + form.label });
+            ds.push({ s: v, note: o.ko + '（' + o.ja + '）の' + form.label, speak: o.ko });
           }
         } catch (e) { }
       }
       var info = {};
-      info[correct] = word.ko + '（' + word.ja + '）の' + form.label;
-      ds.forEach(function (d) { info[d.s] = d.note; });
+      info[correct] = { text: word.ko + '（' + word.ja + '）の' + form.label, speak: word.ko };
+      ds.forEach(function (d) { info[d.s] = { text: d.note, speak: d.speak }; });
       base.kind = 'mc';
       base.choices = shuffle([correct].concat(ds.map(function (d) { return d.s; })));
       base.choiceInfo = info;
@@ -266,12 +271,13 @@
     var correct = label(word, form);
 
     var wrong = [], info = {};
-    info[correct] = shown;
+    var note = function (v) { return { text: v, speak: v }; };   // 注記が活用形そのものなのでそのまま読める
+    info[correct] = note(shown);
     shuffle(KO.formsFor(word)).forEach(function (f) {
       if (f.key === form.key || wrong.length >= 2) return;
       try {
         var v = KO.conjugate(word, f.key);
-        if (v !== shown) { wrong.push(label(word, f)); info[label(word, f)] = v; }
+        if (v !== shown) { wrong.push(label(word, f)); info[label(word, f)] = note(v); }
       } catch (e) { }
     });
     var poolPreds = (opts.preds && opts.preds.length > 3 ? opts.preds : PREDS).filter(function (x) {
@@ -284,7 +290,7 @@
       var l = label(o, form);
       if (wrong.indexOf(l) < 0 && l !== correct) {
         wrong.push(l);
-        try { info[l] = KO.conjugate(o, form.key); } catch (e) { }
+        try { info[l] = note(KO.conjugate(o, form.key)); } catch (e) { }
       }
     }
     shuffle(KO.FORMS).forEach(function (f) {
@@ -293,7 +299,7 @@
       if (l2 === correct || wrong.indexOf(l2) >= 0) return;
       try {
         var v2 = KO.conjugate(word, f.key);
-        if (v2 !== shown) { wrong.push(l2); info[l2] = v2; }
+        if (v2 !== shown) { wrong.push(l2); info[l2] = note(v2); }
       } catch (e) { }
     });
 

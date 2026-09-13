@@ -408,7 +408,9 @@ body.no-speak .spk { display: none; }
 }
 .choice.ok .note { color: var(--green-text); }
 .choice.ng .note { color: var(--red-text); }
-.choice .note .spk { width: 22px; height: 22px; font-size: 11px; }
+/* 解説の🔊は語のすぐ横に置く（.choice .spk の margin-left:auto を打ち消す） */
+.choice .note .spk { width: 22px; height: 22px; font-size: 11px; margin-left: 0; }
+.choice .note { flex-wrap: wrap; }
 .choice .spk { margin-left: auto; }
 .verdict .head .spk { background: rgba(255,255,255,.65); }
 .tv-table td .cellwrap { display: flex; align-items: center; gap: 8px; }
