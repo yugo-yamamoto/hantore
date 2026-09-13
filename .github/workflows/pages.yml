@@ -30,7 +30,7 @@ jobs:
           cp index.html            _site/
           cp css/style.css         _site/css/
           # 管理画面用の admin.js / admin.css は入れない
-          cp js/speech.js js/hangul.js js/data.js js/quiz.js js/deck.js js/app.js _site/js/
+          cp js/speech.js js/hangul.js js/data.js js/quiz.js js/themes.js js/deck.js js/app.js _site/js/
           # デッキは語彙データのみ（字幕本文は decks/lines/ にありリポジトリに無い）
           cp decks/*.json          _site/decks/ 2>/dev/null || true
           touch _site/.nojekyll

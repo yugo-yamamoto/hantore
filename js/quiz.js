@@ -143,7 +143,8 @@
   function padWords(words, word, pool) {
     var base = basePool(word);
     var sources = [
-      pool.filter(function (x) { return x.cat === word.cat; }),   // 同カテゴリのデッキ語
+      pool.filter(function (x) { return x.cat === word.cat; }),   // 同カテゴリのプール語
+      pool,                                                       // プール全体（テーマ内で閉じる）
       base.filter(function (x) { return x.cat === word.cat; }),   // 同カテゴリの辞書語
       base.filter(function (x) { return x.type === word.type; })  // 同じ品詞の辞書語
     ];
@@ -323,6 +324,8 @@
     var typeTag = posLabel(word);
     var pool = word.type === 'noun' ? (opts.nouns || NOUNS)
       : (word.type === 'other' ? (opts.others || OTHERS) : (opts.preds || PREDS));
+    if (!pool.length) pool = (opts.nouns || []).concat(opts.preds || [], opts.others || []);
+    if (!pool.length) pool = NOUNS;
     var others = shuffle(pool.filter(function (x) { return x.ko !== word.ko; })).slice(0, 4)
       .map(function (x) { return x.ko; });
     return {
@@ -346,13 +349,15 @@
 
   function buildQueue(mode, n, opts) {
     opts = opts || {};
-    var nouns = (opts.nouns && opts.nouns.length) ? opts.nouns : NOUNS;
-    var preds = (opts.preds && opts.preds.length) ? opts.preds : PREDS;
-    var others = (opts.others && opts.others.length) ? opts.others : OTHERS;
-    others = others.filter(function (w) { return !w.weak; });   // 索引専用の語は出題しない
+    // プールが渡されていれば空でもそのまま使う（length で見ると空プールが辞書全体に化ける）
+    var nouns = opts.nouns || NOUNS;
+    var preds = opts.preds || PREDS;
+    var others = (opts.others || OTHERS).filter(function (w) { return !w.weak; });
+    var allWords = nouns.concat(preds, others);
     // 聞き取りは1音節の語を除く（音だけでは綴りを決められないため）
-    var all = nouns.concat(preds, others).filter(function (w) { return w.ko.length >= 2; });
-    var qs = [], bagN = [], bagP = [], bagO = [], bagA = [];
+    var listenWords = allWords.filter(function (w) { return w.ko.length >= 2; });
+    if (!allWords.length) return [];                      // 語が1つも無いプール
+    var qs = [], bagN = [], bagP = [], bagO = [], bagA = [], bagL = [];
 
     function next(bag, src) {
       if (!bag.length) { Array.prototype.push.apply(bag, shuffle(src)); }
@@ -361,7 +366,8 @@
     var nextNoun = function () { return next(bagN, nouns); };
     var nextPred = function () { return next(bagP, preds); };
     var nextOther = function () { return next(bagO, others); };
-    var nextAny = function () { return next(bagA, all); };
+    var nextAny = function () { return next(bagA, allWords); };
+    var nextListen = function () { return next(bagL, listenWords); };
 
     var GEN = {
       'noun-k2j': function () { return meaningQuestion(nextNoun(), nouns, 'ko2ja', opts); },
@@ -372,15 +378,35 @@
       'conj-j2k': function () { return conjQuestion(nextPred(), null, opts); },
       'other-k2j': function () { return meaningQuestion(nextOther(), others, 'ko2ja', opts); },
       'other-j2k': function () { return meaningQuestion(nextOther(), others, 'ja2ko', opts); },
-      'listen':   function () { return listenQuestion(nextAny(), opts); }
+      // 品詞を問わずプール全体から出す（テーマ用。COURSES には入れないので mix の内訳は変わらない）
+      'all-k2j':  function () { return meaningQuestion(nextAny(), allWords, 'ko2ja', opts); },
+      'all-j2k':  function () { return meaningQuestion(nextAny(), allWords, 'ja2ko', opts); },
+      'listen':   function () { return listenQuestion(nextListen(), opts); }
     };
     // ミックスの内訳。聞き取りは動画デッキのときだけ混ぜる（辞書コースの挙動を変えないため）
     var available = COURSES.filter(function (c) {
-      if (c === 'listen') return !!opts.meta && all.length > 0;
+      if (c === 'listen') return (!!opts.meta || opts.kind === 'theme') && listenWords.length > 0;
       if (c.indexOf('noun') === 0) return nouns.length > 0;
       if (c.indexOf('other') === 0) return others.length > 0;
       return preds.length > 0;
     });
+    // テーマのミックスは品詞別コースだと語が偏るので、全体から出すコースを混ぜる
+    if (opts.kind === 'theme') available = ['all-k2j', 'all-j2k'].concat(available);
+    if (!available.length) available = ['all-k2j', 'all-j2k'];
+
+    // 指定されたコースに使える語が無ければ、使えるコースに振り替える
+    //（UI は開けないコースを出さないが、モード文字列を直接渡された場合の保険）
+    function unusable(m) {
+      if (m === 'listen') return !listenWords.length;
+      if (m.indexOf('noun') === 0) return !nouns.length;
+      if (m.indexOf('other') === 0) return !others.length;
+      if (m.indexOf('pred') === 0 || m.indexOf('conj') === 0) return !preds.length;
+      return false;
+    }
+    if (GEN[mode] && unusable(mode)) {
+      var usable = available.filter(function (c) { return !unusable(c); });
+      mode = usable.length ? pick(usable) : 'all-k2j';
+    }
 
     for (var i = 0; i < n; i++) {
       var gen = GEN[mode] || GEN[pick(available)];

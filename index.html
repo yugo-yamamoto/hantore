@@ -88,6 +88,10 @@
       <div class="arrow">›</div>
     </button>
 
+    <div class="section-title">テーマ別に覚える
+      <button class="theme-all" id="btn-theme-all">すべて ›</button></div>
+    <div id="theme-chips" class="theme-chips"></div>
+
     <div class="section-title">動画から <a class="admin-link" href="admin.html">📺 問題作成管理画面</a></div>
     <div id="deck-list"></div>
 
@@ -170,6 +174,15 @@
   </div>
 </section>
 
+<!-- ============================ テーマ ============================ -->
+<section id="themeview" class="screen">
+  <div class="top-bar">
+    <button class="close-btn" id="btn-theme-close">✕</button>
+    <div style="flex:1;font-weight:800" id="theme-title">テーマ別に覚える</div>
+  </div>
+  <div class="tv-inner" id="theme-body"></div>
+</section>
+
 <!-- ============================ 活用表 ============================ -->
 <section id="tableview" class="screen">
   <div class="top-bar">
@@ -197,6 +210,7 @@
 <script src="js/hangul.js"></script>
 <script src="js/data.js"></script>
 <script src="js/quiz.js"></script>
+<script src="js/themes.js"></script>
 <script src="js/deck.js"></script>
 <script src="js/app.js"></script>
 </body>

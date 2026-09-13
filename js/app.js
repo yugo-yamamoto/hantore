@@ -116,21 +116,25 @@
   function quizOpts(deck) {
     var o = { scope: OPT.scope };
     if (deck) {
-      o.nouns = deck.nouns; o.preds = deck.preds; o.others = deck.others; o.meta = deck.meta;
-      o.videoId = deck.videoId;
-      o.scope = 'basic';        // デッキの用言は手作りの skip 情報が無いので基本5形に固定
+      o.nouns = deck.nouns; o.preds = deck.preds; o.others = deck.others;
+      o.kind = deck.kind || 'deck';
+      if (o.kind === 'deck') {
+        o.meta = deck.meta; o.videoId = deck.videoId;
+        o.scope = 'basic';      // デッキの用言は手作りの skip 情報が無いので基本5形に固定
+      }
     }
     return o;
   }
   function buildQueue(mode, n, deck) {
     return QUIZ.buildQueue(mode, n, quizOpts(deck));
   }
-  /** 'deck:<videoId>:<コース>' を解釈する */
+  /** 'deck:<videoId>:<コース>' と 'theme:<id>:<コース>' を解釈する */
   function parseMode(mode) {
-    var m = /^deck:([A-Za-z0-9_-]{11}):(.+)$/.exec(mode);
-    if (!m) return { course: mode, deck: null };
-    var deck = window.DECKS ? DECKS.pool(m[1]) : null;
-    return { course: m[2], deck: deck };
+    var d = /^deck:([A-Za-z0-9_-]{11}):(.+)$/.exec(mode);
+    if (d) return { course: d[2], deck: window.DECKS ? DECKS.pool(d[1]) : null };
+    var t = /^theme:([a-z0-9-]+):(.+)$/.exec(mode);
+    if (t) return { course: t[2], deck: window.THEMES ? THEMES.pool(t[1]) : null, themeId: t[1] };
+    return { course: mode, deck: null };
   }
 
   /* ============================================================
@@ -140,15 +144,20 @@
 
   function startLesson(mode) {
     var pm = parseMode(mode);
+    // テーマは語数から問題数を決める（12語以下なら2周・それ以上なら1周）
+    var count = pm.themeId && window.THEMES ? THEMES.questionCount(pm.themeId) : OPT.count;
     S = {
-      mode: mode, deck: pm.deck, queue: buildQueue(pm.course, OPT.count, pm.deck), idx: 0,
-      total: OPT.count,
+      mode: mode, deck: pm.deck, themeId: pm.themeId || null,
+      queue: buildQueue(pm.course, count, pm.deck), idx: 0,
+      total: count,
       right: 0, asked: 0, combo: 0, bestCombo: 0,
       wrong: [], selected: null, bank: [], answered: false, requeued: 0
     };
     show('lesson');
-    log('レッスン開始: mode=' + pm.course + (pm.deck ? '（動画: ' + pm.deck.title + '）' : '') +
-      ' / ' + OPT.count + '問 / 活用範囲=' + quizOpts(pm.deck).scope);
+    log('レッスン開始: mode=' + pm.course +
+      (pm.themeId ? '（テーマ: ' + pm.deck.title + ' ' + pm.deck.words.length + '語）'
+                  : (pm.deck ? '（動画: ' + pm.deck.title + '）' : '')) +
+      ' / ' + count + '問 / 活用範囲=' + quizOpts(pm.deck).scope);
     renderQuestion();
   }
 
@@ -359,6 +368,11 @@
     var xp = cleared ? (10 + S.right * 2 + (acc === 100 ? 10 : 0)) : S.right;
     SAVE.xp += xp;
     if (cleared) SAVE.lessons++;
+    if (S.themeId && cleared) {                       // テーマの実施記録（一覧の「✓3回 / 82%」用）
+      var t = THEME_LOG[S.themeId] || { runs: 0, right: 0, total: 0 };
+      t.runs++; t.right += S.right; t.total += S.asked;
+      THEME_LOG[S.themeId] = t; saveThemeLog();
+    }
     persist(); renderStats();
 
     $('res-emoji').textContent = cleared ? (acc === 100 ? '🏆' : '🎉') : '👋';
@@ -386,9 +400,111 @@
     $('res-review').innerHTML = items.length
       ? '<h3>復習しよう（' + items.length + '）</h3>' + items.join('')
       : '';
+    $('btn-home').textContent = S.themeId ? 'テーマに戻る' : 'ホームへ';
     show('result');
-    log('レッスン終了: 正解 ' + S.right + '/' + S.asked + ' (' + acc + '%) XP+' + xp);
+    log('レッスン終了: 正解 ' + S.right + '/' + S.asked + ' (' + acc + '%) XP+' + xp +
+      (S.themeId ? ' / テーマ ' + S.themeId : ''));
   }
+
+  /* ============================================================
+   * テーマ別に覚える
+   * ============================================================ */
+  var THEME_LOG = {};                       // { テーマid: {runs, right, total} }
+  function loadThemeLog() {
+    try { THEME_LOG = JSON.parse(localStorage.getItem('hantore_theme') || '{}') || {}; }
+    catch (e) { THEME_LOG = {}; }
+  }
+  function saveThemeLog() {
+    try { localStorage.setItem('hantore_theme', JSON.stringify(THEME_LOG)); } catch (e) { }
+  }
+  function themeStat(id) {
+    var t = THEME_LOG[id];
+    if (!t || !t.runs) return '';
+    return '✓' + t.runs + '回' + (t.total ? ' / ' + Math.round(t.right / t.total * 100) + '%' : '');
+  }
+
+  /** コースボタン（デッキとテーマで共有） */
+  function courseButtons(prefix, courses) {
+    return courses.map(function (c) {
+      return '<button class="course-btn' + (c.ok ? '' : ' off') + (c.main ? ' main' : '') + '"' +
+        (c.ok ? ' data-mode="' + prefix + c.mode + '"' : ' disabled') +
+        (c.ok ? '' : ' title="語が足りません（' + c.count + '語）"') + '>' +
+        escapeHtml(c.label) + '<span class="n">' + c.count + '</span></button>';
+    }).join('');
+  }
+  function bindModeButtons(box) {
+    Array.prototype.forEach.call(box.querySelectorAll('[data-mode]'), function (b) {
+      b.addEventListener('click', function () { startLesson(b.dataset.mode); });
+    });
+  }
+
+  /** ホームのテーマチップ（横1行） */
+  function renderThemeChips() {
+    var box = $('theme-chips');
+    if (!box || !window.THEMES) return;
+    box.innerHTML = THEMES.list().map(function (t) {
+      return '<button class="theme-chip" data-theme="' + t.id + '">' +
+        '<span class="ic">' + t.icon + '</span>' + escapeHtml(t.label) +
+        '<span class="n">' + t.count + '</span></button>';
+    }).join('');
+    Array.prototype.forEach.call(box.querySelectorAll('[data-theme]'), function (b) {
+      b.addEventListener('click', function () { openTheme(b.dataset.theme); });
+    });
+  }
+
+  /** テーマ一覧 */
+  function renderThemeList() {
+    $('theme-title').textContent = 'テーマ別に覚える';
+    $('theme-body').innerHTML =
+      '<div class="ad-note" style="color:#afafaf;font-size:12px;font-weight:700;margin-bottom:12px">' +
+      'グループごとに、まず単語一覧を見てからまとめて練習できます。</div>' +
+      THEMES.list().map(function (t) {
+        return '<button class="theme-card" data-theme="' + t.id + '">' +
+          '<span class="ic">' + t.icon + '</span>' +
+          '<span class="body"><strong>' + escapeHtml(t.label) + '</strong>' +
+          '<span>' + t.count + '語　' + escapeHtml(t.hint || '') + '</span>' +
+          (themeStat(t.id) ? '<span class="done">' + themeStat(t.id) + '</span>' : '') +
+          '</span><span class="arrow">›</span></button>';
+      }).join('');
+    bindThemeCards($('theme-body'));
+  }
+  function bindThemeCards(box) {
+    Array.prototype.forEach.call(box.querySelectorAll('[data-theme]'), function (b) {
+      b.addEventListener('click', function () { openTheme(b.dataset.theme); });
+    });
+  }
+
+  /** テーマ詳細（単語一覧＋練習ボタン） */
+  function renderTheme(id) {
+    var p = THEMES.pool(id);
+    if (!p) { renderThemeList(); return; }
+    var n = THEMES.questionCount(id);
+    var laps = p.words.length ? Math.round(n / p.words.length * 10) / 10 : 1;
+    $('theme-title').textContent = p.icon + ' ' + p.title;
+    $('theme-body').innerHTML =
+      '<div class="th-head"><span class="ic">' + p.icon + '</span>' +
+      '<span class="tt"><strong>' + escapeHtml(p.title) + '</strong>' +
+      '<span>' + p.words.length + '語　' + escapeHtml(p.hint || '') +
+      (themeStat(id) ? '　' + themeStat(id) : '') + '</span></span></div>' +
+      '<button class="btn wide" data-mode="theme:' + id + ':all-k2j">' +
+      '練習する（' + n + '問・' + p.words.length + '語×' + laps + '周）</button>' +
+      '<div class="th-actions">' + courseButtons('theme:' + id + ':', THEMES.courses(id).slice(1)) + '</div>' +
+      p.words.map(function (w, i) {
+        return '<div class="th-word"><span class="no">' + (i + 1) + '</span>' +
+          '<span class="ko">' + escapeHtml(w.ko) + '</span>' + SPEECH.btn(w.ko, 'sm') +
+          '<span class="ja">' + escapeHtml(w.ja) + '</span>' +
+          '<span class="pos">' + escapeHtml(QUIZ.posLabel(w)) + '</span></div>';
+      }).join('');
+    bindModeButtons($('theme-body'));
+  }
+
+  function openTheme(id) {
+    S = S || null;
+    themeScreen = id || null;
+    show('themeview');
+    if (id) renderTheme(id); else renderThemeList();
+  }
+  var themeScreen = null;
 
   /* ============================================================
    * 動画から作ったデッキ（ホーム画面）
@@ -412,12 +528,7 @@
     }
     box.innerHTML = items.map(function (it) {
       var p = DECKS.pool(it.id) || { nouns: [], preds: [], others: [] };
-      var btns = DECKS.courses(it.id).map(function (c) {
-        return '<button class="deck-course' + (c.ok ? '' : ' off') + '"' +
-          (c.ok ? ' data-mode="deck:' + it.id + ':' + c.mode + '"' : ' disabled') +
-          ' title="' + (c.ok ? '' : '語が足りません（' + c.count + '語）') + '">' +
-          escapeHtml(c.label) + '<span class="n">' + c.count + '</span></button>';
-      }).join('');
+      var btns = courseButtons('deck:' + it.id + ':', DECKS.courses(it.id));
       return '<div class="deck-card">' +
         '<div class="deck-head">' +
         '<span class="ic">📺</span>' +
@@ -463,7 +574,7 @@
    * 画面遷移
    * ============================================================ */
   function show(id) {
-    ['home', 'lesson', 'result', 'tableview'].forEach(function (s) {
+    ['home', 'lesson', 'result', 'themeview', 'tableview'].forEach(function (s) {
       $(s).classList.toggle('active', s === id);
     });
     log('画面: ' + id);
@@ -473,7 +584,8 @@
    * イベント登録
    * ============================================================ */
   function init() {
-    loadSave(); renderStats();
+    loadSave(); loadThemeLog(); renderStats();
+    renderThemeChips();
 
     // 読み上げボタンはキャプチャ段階で処理する
     //（選択肢や <summary> の中にあっても、選択・開閉を発生させない）
@@ -520,8 +632,17 @@
       log('レッスン中断');
     });
     $('btn-again').addEventListener('click', function () { startLesson(S ? S.mode : 'mix'); });
-    $('btn-home').addEventListener('click', function () { renderStats(); show('home'); });
+    $('btn-home').addEventListener('click', function () {
+      renderStats();
+      if (S && S.themeId) { openTheme(S.themeId); return; }   // テーマから来たならテーマに戻る
+      show('home');
+    });
     $('btn-table').addEventListener('click', function () { renderTable(''); show('tableview'); });
+    $('btn-theme-all').addEventListener('click', function () { openTheme(null); });
+    $('btn-theme-close').addEventListener('click', function () {
+      if (themeScreen) { openTheme(null); return; }            // 詳細 → 一覧
+      show('home');                                            // 一覧 → ホーム
+    });
     $('btn-tv-close').addEventListener('click', function () { show('home'); });
     $('tv-search').addEventListener('input', function () { renderTable(this.value); });
 
@@ -588,7 +709,7 @@
   //   出題の生成そのものは window.QUIZ を直接使う
   window.HT = {
     buildQueue: buildQueue, quizOpts: quizOpts, parseMode: parseMode,
-    startLesson: startLesson, renderDecks: renderDecks,
+    startLesson: startLesson, renderDecks: renderDecks, openTheme: openTheme,
     OPT: OPT, log: log, speak: speakNow,
     state: function () { return S; }
   };

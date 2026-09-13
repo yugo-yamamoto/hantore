@@ -79,6 +79,9 @@
     var p = pool(id);
     if (!p) return [];
     var n = p.nouns.length, v = p.preds.length, o = p.others.length, all = n + v + o;
+    // 聞き取りは1音節の語を出さないので、その分を除いて数える
+    var listenable = p.nouns.concat(p.preds, p.others)
+      .filter(function (w) { return w.ko.length >= 2; }).length;
     return [
       { mode: 'noun-k2j', label: '名詞 韓→日', count: n, ok: n >= 4 },
       { mode: 'noun-j2k', label: '名詞 日→韓', count: n, ok: n >= 4 },
@@ -88,7 +91,7 @@
       { mode: 'conj-j2k', label: '活用 日→韓', count: v, ok: v >= 1 },
       { mode: 'other-k2j', label: '副詞など 韓→日', count: o, ok: o >= 4 },
       { mode: 'other-j2k', label: '副詞など 日→韓', count: o, ok: o >= 4 },
-      { mode: 'listen', label: '🔊 聞き取り', count: all, ok: all >= 4 },
+      { mode: 'listen', label: '🔊 聞き取り', count: listenable, ok: listenable >= 4 },
       { mode: 'mix', label: '🎯 ミックス', count: all, ok: all >= 4 }
     ];
   }
